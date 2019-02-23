@@ -26,7 +26,11 @@
             <input type="checkbox" id="checkboxHoliday" name="notification_dsoW[]" checked>
                 <label class="checkbox_label" for="checkboxHoliday">祝日</label>
             <br>
-            <input type="button" onclick="allDelete()" value="設定！"/>
+            <input type="button" onclick="selectALl()" value="全て選択">
+            <input type="button" onclick="deselectAll" value="全て選択解除">
+            <input type="button" onclick="selectWorkday()" value="平日のみ選択">
+            <br>
+            <input type="button" onclick="sumbit()" value="設定！">
         </div>
         <div id="result">
         </div>
