@@ -8,7 +8,7 @@ input[type=checkbox] {
     transition: background-color 0.2s linear;
     position: relative;
     display: inline-block;
-    margin: 0 30px 50px 0;
+    margin: 0 30px 40px 0;
     padding: 10px 22px 10px 30px;
     border-radius: 14px;
     background-color: #f0f0f0;
