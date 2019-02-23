@@ -4,7 +4,7 @@ var resultView;
 window.onload = function() {
     mainView = document.getElementById("main");
     resultView = document.getElementById("result");
-    if (navigator.userAgent.indexOf("Line") !== -1) {
+    if (navigator.userAgent.indexOf("Line") !== -1 || true) {
         alert("さては、、お前、LINEから開いたな？？");
     }else{
         mainView.style.display="none";
