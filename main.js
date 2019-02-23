@@ -8,6 +8,6 @@ window.onload = function() {
         alert("さては、、お前、LINEから開いたな？？");
     }else{
         mainView.style.display="none";
-        resultView.innnerHTML = "スマホアプリのLINEから開いてください！！<br>PCその他から設定することは出来ません。";
+        resultView.innerHTML = "スマホアプリのLINEから開いてください！！<br>PCその他から設定することは出来ません。";
     }
 }
