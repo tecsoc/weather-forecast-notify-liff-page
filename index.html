@@ -9,27 +9,29 @@
         <div id="main">
             <h2>通知設定</h3>
             <h3>通知したい曜日</h3>
-            <input type="checkbox" id="checkboxMonday" name="notification_dsoW[]" checked>
+            <div class="display_flex">
+                <input type="checkbox" id="checkboxMonday" name="notification_dsoW[]" checked>
                 <label class="checkbox_label" for="checkboxMonday">月</label>
-            <input type="checkbox" id="checkboxTuesday" name="notification_dsoW[]" checked>
+                <input type="checkbox" id="checkboxTuesday" name="notification_dsoW[]" checked>
                 <label class="checkbox_label" for="checkboxTuesday">火</label>
-            <input type="checkbox" id="checkboxWednesday" name="notification_dsoW[]" checked>
+                <input type="checkbox" id="checkboxWednesday" name="notification_dsoW[]" checked>
                 <label class="checkbox_label" for="checkboxWednesday">水</label>
-            <input type="checkbox" id="checkboxThursday" name="notification_dsoW[]" checked>
+                <input type="checkbox" id="checkboxThursday" name="notification_dsoW[]" checked>
                 <label class="checkbox_label" for="checkboxThursday">木</label>
-            <input type="checkbox" id="checkboxFriday" name="notification_dsoW[]" checked>
+                <input type="checkbox" id="checkboxFriday" name="notification_dsoW[]" checked>
                 <label class="checkbox_label" for="checkboxFriday">金</label>
-            <input type="checkbox" id="checkboxSaturday" name="notification_dsoW[]" checked>
+                <input type="checkbox" id="checkboxSaturday" name="notification_dsoW[]" checked>
                 <label class="checkbox_label" for="checkboxSaturday">土</label>
-            <input type="checkbox" id="checkboxSunday" name="notification_dsoW[]" checked>
+                <input type="checkbox" id="checkboxSunday" name="notification_dsoW[]" checked>
                 <label class="checkbox_label" for="checkboxSunday">日</label>
-            <input type="checkbox" id="checkboxHoliday" name="notification_dsoW[]" checked>
+                <input type="checkbox" id="checkboxHoliday" name="notification_dsoW[]" checked>
                 <label class="checkbox_label" for="checkboxHoliday">祝日</label>
-            <br>
-            <input type="button" onclick="selectALl()" value="全て選択">
-            <input type="button" onclick="deselectAll" value="全て選択解除">
-            <input type="button" onclick="selectWorkday()" value="平日のみ選択">
-            <br>
+            </div>
+            <div class="display_flex">
+                <input type="button" onclick="selectALl()" value="全て選択">
+                <input type="button" onclick="deselectAll()" value="全て選択解除">
+                <input type="button" onclick="selectWorkday()" value="平日のみ選択">
+            </div>
             <input type="button" onclick="sumbit()" value="設定！">
         </div>
         <div id="result">
