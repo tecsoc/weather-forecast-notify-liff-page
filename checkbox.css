@@ -15,6 +15,7 @@ input[type=checkbox] {
   vertical-align: middle;
   cursor: pointer;
   text-indent: 40px;
+  transform: scale(1.05);
 }
 .checkbox_label:hover {
   background-color: #e2edd7;
