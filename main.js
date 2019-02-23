@@ -1,11 +1,13 @@
 var mainView;
+var resultView;
 
 window.onload = function() {
     mainView = document.getElementById("main");
+    resultView = document.getElementById("result");
     if (navigator.userAgent.indexOf("Line") !== -1) {
         alert("さては、、お前、LINEから開いたな？？");
     }else{
-        alert("PCは非対応です");
         mainView.style.display="none";
+        resultView.innnerHTML = "スマホアプリのLINEから開いてください！！<br>PCその他から設定することは出来ません。";
     }
 }
