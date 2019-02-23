@@ -14,7 +14,7 @@ input[type=checkbox] {
   background-color: #f6f7f8;
   vertical-align: middle;
   cursor: pointer;
-  text-indent: 45px;
+  text-indent: 40px;
 }
 .checkbox_label:hover {
   background-color: #e2edd7;
@@ -27,11 +27,11 @@ input[type=checkbox] {
   transition: border-color 0.2s linear;
   position: absolute;
   top: 50%;
-  left: 27px;
+  left: 25px;
   display: block;
   margin-top: -10px;
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   border: 1.5px solid #bbb;
   border-radius: 6px;
   content: '';
@@ -43,7 +43,7 @@ input[type=checkbox] {
   transition: opacity 0.2s linear;
   position: absolute;
   top: 50%;
-  left: 34px;
+  left: 31px;
   display: block;
   margin-top: -8px;
   width: 5px;
@@ -52,9 +52,8 @@ input[type=checkbox] {
   border-bottom: 3px solid #53b300;
   content: '';
   opacity: 0;
-  -webkit-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  /* transform: rotate(45deg); */
+  -webkit-transform:  rotate(45deg) scale(1.8);
+  -ms-transform:  rotate(45deg) scale(1.8);
   transform: rotate(45deg) scale(1.8);
 }
 input[type=checkbox]:checked + .checkbox_label:before {
