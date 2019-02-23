@@ -8,15 +8,14 @@ input[type=checkbox] {
     transition: background-color 0.2s linear;
     position: relative;
     display: inline-block;
-    margin: 0 50px 50px calc(5% - 25px);
-    margin: 0 50px 50px -webkit-calc(5% - 25px);
-    padding: 10px 20px 10px 25px;
+    margin: 0 50px 50px 0;
+    padding: 10px 22px 10px 30px;
     border-radius: 14px;
     background-color: #f0f0f0;
     vertical-align: middle;
     cursor: pointer;
-    text-indent: 40px;
-    transform: scale(1.2);
+    text-indent: 52px;
+    font-size: 40px;
 }
 .checkbox_label:hover {
     background-color: #e2edd7;
@@ -28,12 +27,12 @@ input[type=checkbox] {
     -webkit-transition: border-color 0.2s linear;
     transition: border-color 0.2s linear;
     position: absolute;
-    top: 50%;
-    left: 25px;
+    top: 49%;
+    left: 35px;
     display: block;
     margin-top: -10px;
-    width: 16px;
-    height: 16px;
+    width: 20px;
+    height: 20px;
     border: 1.5px solid #bbb;
     border-radius: 6px;
     content: '';
@@ -47,14 +46,14 @@ input[type=checkbox] {
     -webkit-transition: opacity 0.2s linear;
     transition: opacity 0.2s linear;
     position: absolute;
-    top: 50%;
-    left: 31px;
+    top: 49%;
+    left: 43px;
     display: block;
     margin-top: -8px;
     width: 5px;
-    height: 9px;
-    border-right: 3px solid #53b300;
-    border-bottom: 3px solid #53b300;
+    height: 10px;
+    border-right: 4px solid #53b300;
+    border-bottom: 4px solid #53b300;
     content: '';
     opacity: 0;
     -webkit-transform: rotate(45deg) scale(1.8);
