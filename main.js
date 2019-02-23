@@ -9,7 +9,7 @@ window.onload = function() {
             var userId = data.context.userId;
             alert("ユーザーID：" + userId);
         }, function(error) {
-        alert(error);
+            alert(error);
         });
     }else{
         mainView.style.display="none";
