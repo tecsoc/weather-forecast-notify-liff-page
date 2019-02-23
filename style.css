@@ -6,3 +6,17 @@ body{
     -webkit-user-select: none;
     -ms-user-select: none;
 }
+
+
+input[type="button"] {
+  background: linear-gradient(#a0d8ef,#20b2aa);
+    padding: 10px 20px;
+    margin-right: 25px;
+    border: 2px solid #1babb3;
+    border-radius: 8px;
+    display: inline-block;
+    font-size: 70%;
+    color: white;
+    box-shadow: 3px 4px 5px rgba(0,0,0,0.5);
+    outline: none;
+}
