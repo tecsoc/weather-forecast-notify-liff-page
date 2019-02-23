@@ -7,7 +7,7 @@ window.onload = function() {
     if (navigator.userAgent.indexOf("Line") !== -1 || true) {
         liff.init(function (data) {
             var userId = data.context.userId;
-            alert("ユーザーID：" + serId);
+            alert("ユーザーID：" + userId);
         }, function(error) {
         alert(error);
         });
