@@ -17,7 +17,7 @@ input[type=checkbox] {
     font-size: 115%;
     font-weight: bolder;
     vertical-align: middle;
-    margin: 10px auto;
+    margin: 10px 10px 10px 0;
 }
 .checkbox_label:hover {
     background-color: #e2edd7;
