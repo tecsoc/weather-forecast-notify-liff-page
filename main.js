@@ -20,9 +20,14 @@ window.onload = function() {
 }
 
 function selectALl(){
+    for(var i = 0; i< weekdayGroup.length; i++){
+        weekdayGroup[i].checked = true;
+    }
+    /*
     weekdayGroup.forEach(function(weekday){
         weekday.checked = true;
     });
+    */
 }
 
 function deselectAll(){
