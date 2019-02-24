@@ -8,12 +8,12 @@ input[type=checkbox] {
     transition: background-color 0.2s linear;
     position: relative;
     display: inline-block;
-    padding: 10px 15px 10px 20px;
+    padding: 10px 10px 10px 20px;
     border-radius: 12px;
     background-color: #f0f0f0;
     vertical-align: middle;
     cursor: pointer;
-    text-indent: 30px;
+    text-indent: 28px;
     font-size: 115%;
     font-weight: bolder;
     vertical-align: middle;
@@ -29,19 +29,15 @@ input[type=checkbox] {
     -webkit-transition: border-color 0.2s linear;
     transition: border-color 0.2s linear;
     position: absolute;
-    top: 55%;
-    left: 21px;
+    top: 45%;
+    left: 12px;
     display: block;
     margin-top: -10px;
-    width: 13px;
-    height: 13px;
-    border: 2px solid #bbb;
-    border-radius: 6px;
+    width: 20px;
+    height: 20px;
+    border: 3px solid #bbb;
+    border-radius: 8px;
     content: '';
-    transform: scale(1.8);
-    -webkit-transform: scale(1.8);
-    -ms-transform: scale(1.8);
-    transform: scale(1.8);
 }
 
 .checkbox_label:before {
@@ -49,19 +45,22 @@ input[type=checkbox] {
     transition: opacity 0.2s linear;
     position: absolute;
     top: 55%;
-    left: 27px;
+    left: 23px;
     display: block;
     margin-top: -8px;
-    width: 4px;
-    height: 8px;
+    width: 3px;
+    height: 7px;
     border-right: 2px solid #53b300;
     border-bottom: 2px solid #53b300;
     content: '';
-    opacity: 0;
     -webkit-transform: rotate(45deg) scale(1.8);
     -ms-transform: rotate(45deg) scale(1.8);
     transform: rotate(45deg) scale(1.8);
 }
 input[type=checkbox]:checked + .checkbox_label:before {
     opacity: 1;
+}
+
+div label:last-child{
+    margin-right:0;
 }
