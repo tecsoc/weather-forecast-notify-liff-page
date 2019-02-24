@@ -61,7 +61,3 @@ input[type=checkbox] {
 input[type=checkbox]:checked + .checkbox_label:before {
     opacity: 1;
 }
-
-div label:last-child{
-    margin-right:0;
-}
