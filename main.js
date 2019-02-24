@@ -23,19 +23,19 @@ function selectALl(){
     for(var i = 0; i< weekdayGroup.length; i++){
         weekdayGroup[i].checked = true;
     }
-    /*
-    weekdayGroup.forEach(function(weekday){
-        weekday.checked = true;
-    });
-    */
 }
 
 function deselectAll(){
-    
+    for(var i = 0; i< weekdayGroup.length; i++){
+        weekdayGroup[i].checked = false;
+    }
 }
 
 function selectWorkday(){
-    
+    selectALl();
+    for(var i = weekdayGroup.length - 1; i >= weekdayGroup.length - 3; i--){
+        weekdayGroup[i].checked = false;
+    }
 }
 
 function sumbit(){
