@@ -31,6 +31,6 @@ input[type="button"] {
     justify-content: start;
 }
 
-.display_flex:last-child{
+.display_flex *:last-child{
     margin-right:0;
 }
