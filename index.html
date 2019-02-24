@@ -10,7 +10,7 @@
         <div id="main">
             <h2>通知設定</h3>
             <h3>通知したい曜日</h3>
-            <div class="display_flex">
+            <form name="chooseNotifyWeekday" class="display_flex">
                 <input type="checkbox" id="checkboxMonday" name="notification_dsoW[]" checked>
                 <label class="checkbox_label" for="checkboxMonday">月</label>
                 <input type="checkbox" id="checkboxTuesday" name="notification_dsoW[]" checked>
@@ -27,7 +27,7 @@
                 <label class="checkbox_label" for="checkboxSunday">日</label>
                 <input type="checkbox" id="checkboxHoliday" name="notification_dsoW[]" checked>
                 <label class="checkbox_label" for="checkboxHoliday">祝日</label>
-            </div>
+            </form>
             <div class="display_flex">
                 <input type="button" onclick="selectALl()" value="全て選択">
                 <input type="button" onclick="deselectAll()" value="全て選択解除">
