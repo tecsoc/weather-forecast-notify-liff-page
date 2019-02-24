@@ -30,3 +30,7 @@ input[type="button"] {
     flex-wrap: wrap;
     justify-content: start;
 }
+
+.display_flex:last-child{
+    margin-right:0;
+}
