@@ -13,10 +13,10 @@ h1{
 }
 
 input[type="button"] {
-    background: linear-gradient(#a0d8ef,#20b2aa);
+    background-image: linear-gradient(335deg, #08AEEA 12%, #2AF598 100%);
     padding: 8px 12px;
     margin: 15px 10px 15px 0;
-    border: 2px solid #1babb3;
+    border: 2px solid royalblue;
     border-radius: 12px;
     display: inline-block;
     font-size: 100%;
