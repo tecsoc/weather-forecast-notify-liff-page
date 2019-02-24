@@ -13,7 +13,7 @@ h1{
 }
 
 input[type="button"] {
-    background-image: linear-gradient(335deg, #08AEEA 12%, #2AF598 100%);
+    background-image: linear-gradient(335deg, #08AEEA 5%, #2AF598 85%);
     padding: 8px 12px;
     margin: 15px 10px 15px 0;
     border: 2px solid royalblue;
