@@ -8,6 +8,9 @@ body{
     -ms-user-select: none;
 }
 
+h1{
+    margin-top: 0;   
+}
 
 input[type="button"] {
     background: linear-gradient(#a0d8ef,#20b2aa);
@@ -22,7 +25,7 @@ input[type="button"] {
     outline: none;
 }
 
-.display_flex {
+.display_flex{
     display: flex;
     flex-wrap: wrap;
     justify-content: start;
