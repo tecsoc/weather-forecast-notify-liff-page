@@ -58,6 +58,6 @@ function sumbit(){
         liff.closeWindow();
     })
     .catch((err) => {
-        alert('error', err);
+        alert(err);
     });
 }
