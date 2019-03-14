@@ -47,6 +47,7 @@ function sumbit(){
             notifyWeekdayArray[i] = 0;
         };
     }
+    notifyWeekdayArray = notifyWeekdayArray.join(",");
     liff.sendMessages([
         {
             type: 'text',
