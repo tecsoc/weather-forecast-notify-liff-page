@@ -51,7 +51,7 @@ function sumbit(){
     liff.sendMessages([
         {
             type:'text',
-            text:'Hello, World!'
+            text:notifyWeekdayArray
         }
     ])
     .then(() => {
