@@ -53,5 +53,11 @@ function sumbit(){
             type:'text',
             text:'Hello, World!'
         }
-    ]);
+    ])
+    .then(() => {
+        alert('message sent');
+    })
+    .catch((err) => {
+        alert('error', err);
+    });
 }
