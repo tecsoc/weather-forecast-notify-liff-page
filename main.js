@@ -39,5 +39,24 @@ function selectWorkday(){
 }
 
 function sumbit(){
-    liff.closeWindow();
+    var notifyWeekdayArray = [];
+    for(var i = 0; i< weekdayGroup.length; i++){
+        if (weekdayGroup[i].checked){
+            notifyWeekdayArray[i] = 1;
+        }else{
+            notifyWeekdayArray[i] = 0;
+        };
+    }
+    liff.sendMessages([
+        {
+            type: 'text',
+            text: notifyWeekdayArray
+        }
+    ])
+    .then(() => {
+        liff.closeWindow();
+    })
+    .catch((err) => {
+        alert('error', err);
+    });
 }
