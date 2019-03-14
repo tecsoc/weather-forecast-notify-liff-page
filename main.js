@@ -48,16 +48,15 @@ function sumbit(){
         };
     }
     notifyWeekdayArray = notifyWeekdayArray.join(",");
-    liff.sendMessages([
-        {
-            type:'text',
-            text:notifyWeekdayArray
-        }
-    ])
-    .then(() => {
-        alert('message sent');
-    })
-    .catch((err) => {
+    try{
+        liff.sendMessages([
+            {
+                type:'text',
+                text:notifyWeekdayArray
+            }
+        ]);
+        liff.closeWindow();
+    }catch (err){
         alert('error', err);
-    });
+    }
 }
