@@ -50,14 +50,8 @@ function sumbit(){
     notifyWeekdayArray = notifyWeekdayArray.join(",");
     liff.sendMessages([
         {
-            type: 'text',
-            text: "テスト",
+            type:'text',
+            text:'Hello, World!'
         }
-    ])
-    .then(() => {
-        liff.closeWindow();
-    })
-    .catch((err) => {
-        alert(err);
-    });
+    ]);
 }
