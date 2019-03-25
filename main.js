@@ -48,19 +48,16 @@ function sumbit(){
         };
     }
     notifyWeekdayArray = "@詳細設定\n" + notifyWeekdayArray.join(",");
-    liff
-      .sendMessages([
+    liff.sendMessages([
         {
           type: 'text',
           text: notifyWeekdayArray
         }
-      ])
-      .then(function() {
+    ]).then(function() {
         window.alert('送信完了');
         // aleartでOKを押すと、自動でLIFFウィンドウが閉じる
         liff.closeWindow();
-      })
-      .catch(function(error) {
+    }).catch(function(error) {
         window.alert(error);
-      });
+    });
 }
