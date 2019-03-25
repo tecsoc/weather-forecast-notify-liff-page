@@ -59,7 +59,7 @@ function sumbit(){
         alert(error);
         return;
     }
-    setTimeout(function(){ liff.closeWindow(); , 1000);
+    setTimeout(function(){ liff.closeWindow(); }, 1000);
     /*.then(function() {
         window.alert("送信完了");
         // aleartでOKを押すと、自動でLIFFウィンドウが閉じる
