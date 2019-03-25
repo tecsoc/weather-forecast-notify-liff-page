@@ -49,18 +49,21 @@ function sumbit(){
     }
     notifyWeekdayArray = "@詳細設定\n" + notifyWeekdayArray.join(",");
     alert(notifyWeekdayArray);
-    liff.sendMessages([
-        {
-          type: "text",
-          text: notifyWeekdayArray
-        }
-    ]);
+    try {
+        liff.sendMessages([
+            {
+              type: "text",
+              text: notifyWeekdayArray
+            }
+        ]);
+        liff.closeWindow();
+    }catch (error) {
+        alert(error);
+    }
     /*.then(function() {
         window.alert("送信完了");
         // aleartでOKを押すと、自動でLIFFウィンドウが閉じる
         liff.closeWindow();
-    }).catch(function(error) {
-        window.alert(error);
-    });
+    
     */
 }
