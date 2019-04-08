@@ -53,14 +53,14 @@ function sumbit(){
     liff.sendMessages([
         {
             type:'text',
-            text:'Hello, World!'
+            text: notifyWeekdayArray
         }
     ])
     .then(() => {
-        alert('message sent');
+        liff.closeWindow();
     })
-    .catch((err) => {
-        alert(err);
+    .catch((error) => {
+        alert(error);
     });
     
     
