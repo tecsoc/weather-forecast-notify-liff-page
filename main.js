@@ -65,7 +65,6 @@ function sumbit(){
       .catch(function(error) {
         window.alert(error);
       });
-    });
     
     /*try {
         liff.sendMessages([
