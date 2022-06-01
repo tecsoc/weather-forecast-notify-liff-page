@@ -6,11 +6,15 @@ window.onload = function() {
     mainView = document.getElementById("main");
     resultView = document.getElementById("result");
     weekdayGroup = document.forms.chooseNotifyWeekday;
-    if (navigator.userAgent.indexOf("Line") !== -1 || true) {
-        liff.init(function (data) {
-            var userId = data.context.userId;
-            // alert("ユーザーID：" + userId);
-        }, function(error) {
+    if (navigator.userAgent.indexOf("Line") !== -1) {
+        liff.init({ liffId: "1582624460-A8R9a3L8"})
+        .then(() => {
+            let userId = "";
+            liff.getProfile().then(profile => {
+                userId = profile.userId;
+            });
+            alert("ユーザーID：" + userId);
+        }).catch((error) => {
             alert(error);
         });
     }else{
