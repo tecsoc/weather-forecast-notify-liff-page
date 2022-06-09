@@ -9,11 +9,8 @@ window.onload = function() {
     if (navigator.userAgent.indexOf("Line") !== -1) {
         liff.init({ liffId: "1582624460-A8R9a3L8"})
         .then(() => {
-            let userId = "";
-            liff.getProfile().then(profile => {
-                userId = profile.userId;
-            });
-            alert("ユーザーID：" + userId);
+            // const userId = liff.getProfile().userId;
+            // alert("ユーザーID：" + userId);
         }).catch((error) => {
             alert(error);
         });
