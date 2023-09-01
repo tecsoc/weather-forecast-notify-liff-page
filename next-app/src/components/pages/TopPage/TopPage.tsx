@@ -1,8 +1,8 @@
 'use client';
+import styles from './TopPage.module.scss';
 import CheckBox from "@/components/atoms/CheckBox/CheckBox";
-import { memo, useReducer, useCallback, Reducer } from "react";
-import Button from "@/components/atoms/Button/Button";
-import React from "react";
+import React,{ useReducer, useCallback } from "react";
+import ButtonAsTypeButton from '@/components/atoms/ButtonAsTypeButton/ButtonAsTypeButton';
 
 type WeekDayObjType = {
   id: string;
@@ -31,7 +31,7 @@ const targetWeekDaysReducer = (state: WeekDayObjType[], action: TargetWeekDayRed
 };
 
 const TopPage = () => {
-  const [targetWeekDays, dispatchTargetWeekDays] = useReducer<Reducer<WeekDayObjType[], TargetWeekDayReducerActionType>>(targetWeekDaysReducer, (() => {
+  const [targetWeekDays, dispatchTargetWeekDays] = useReducer<React.Reducer<WeekDayObjType[], TargetWeekDayReducerActionType>>(targetWeekDaysReducer, (() => {
     const defaultValue = {
       value: true
     };
@@ -121,16 +121,26 @@ const TopPage = () => {
   }), [targetWeekDays]);
 
   // 平日のみ選択
-  const weekdaysCheckHandler = useCallback(() => dispatchTargetWeekDays({
-    type: 'setCheck',
-    payload: targetWeekDays.flatMap(({id}) => {
-      if (['Saturday', 'Sunday', 'Holiday'].includes(id)) return [];
-      return {
-        id,
-        value: true
+  const weekdaysCheckHandler = useCallback(() => {
+    const payload = targetWeekDays.map((item) => {
+      const returnObj = item;
+      if (['Saturday', 'Sunday', 'Holiday'].includes(item.id)) {
+        returnObj.value = false;
+      } else {
+        returnObj.value = true;
       }
+      return returnObj;
+    });
+    dispatchTargetWeekDays({
+      type: 'setCheck',
+      payload
     })
-  }), [targetWeekDays]);
+  }, [targetWeekDays]);
+
+  const submitHandler = useCallback((e: React.FormEvent<HTMLFormElement>) => {
+    console.log('submit');
+    e.preventDefault();
+  }, []);
 
   return (
     <main>
@@ -138,18 +148,17 @@ const TopPage = () => {
     <div>
       <h2>通知設定</h2>
       <h3>通知したい曜日</h3>
-      <form>
+      <form onSubmit={submitHandler}>
         {targetWeekDays.map(({id, text, value}) => <CheckBox key={id} checked={value} id={`checkbox${id}`} onChange={checkboxHandler(id)} >{text}</CheckBox>)}
         <div>
-          <Button onClick={allCheckHandler}>全て選択</Button>
-          <Button onClick={allNotCheckHandler}>全て選択解除</Button>
-          <Button onClick={weekdaysCheckHandler}>平日のみ選択</Button>
-        </div>
-        <Button>設定を更新</Button>
+          <ButtonAsTypeButton className={styles.selectionButton} onClick={allCheckHandler}>全て選択</ButtonAsTypeButton>
+          <ButtonAsTypeButton className={styles.selectionButton} onClick={allNotCheckHandler}>全て選択解除</ButtonAsTypeButton>
+          <ButtonAsTypeButton className={styles.selectionButton} onClick={weekdaysCheckHandler}>平日のみ選択</ButtonAsTypeButton>
+        </div><button type="submit" className={styles.submitButton}>設定を更新</button>
       </form>
     </div>
     </main>
   );
 };
 
-export default memo(TopPage);
+export default React.memo(TopPage);

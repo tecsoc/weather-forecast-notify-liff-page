@@ -1,5 +1,5 @@
 import cn from "@/modules/ts/cn";
-import { HTMLInputTypeAttribute, memo } from "react";
+import React, { HTMLInputTypeAttribute } from "react";
 import styles from "./CheckBox.module.scss";
 
 type CheckBoxProps = Partial<JSX.IntrinsicElements['input']> & {
@@ -17,4 +17,4 @@ const CheckBox = (props : CheckBoxProps) => {
   </>;
 }
 
-export default memo(CheckBox);
+export default React.memo(CheckBox);

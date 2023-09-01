@@ -1,3 +1,3 @@
 export default function cn(...args: (string | undefined)[]) {
-  return args.join(' ');
+  return args.filter(arg => arg).join(' ');
 }
