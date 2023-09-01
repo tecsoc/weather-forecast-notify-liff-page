@@ -12,7 +12,7 @@ const CheckBox = (props : CheckBoxProps) => {
   const { children, ...inputArgs } = props;
 
   return <>
-    <input type={inputType} className={cn(styles.checkboxInput, props.className)} defaultChecked={defaultChecked} {...inputArgs} />
+    <input type={inputType} className={cn(styles.checkboxInput, props.className)}  {...(props.checked ? {} : {defaultChecked: defaultChecked})} {...inputArgs} />
     <label className={styles.checkboxLabel} htmlFor={props.id}>{children}</label>
   </>;
 }

@@ -3,6 +3,7 @@ import styles from './TopPage.module.scss';
 import CheckBox from "@/components/atoms/CheckBox/CheckBox";
 import React,{ useReducer, useCallback } from "react";
 import ButtonAsTypeButton from '@/components/atoms/ButtonAsTypeButton/ButtonAsTypeButton';
+import cn from '@/modules/ts/cn';
 
 type WeekDayObjType = {
   id: string;
@@ -16,6 +17,11 @@ type TargetWeekDayReducerActionType = {
     id: string;
     value: boolean;
   }[];
+} | {
+  type : 'setCheckAll';
+  payload: {
+    value: boolean;
+  }
 };
 
 const targetWeekDaysReducer = (state: WeekDayObjType[], action: TargetWeekDayReducerActionType): WeekDayObjType[] => {
@@ -26,6 +32,11 @@ const targetWeekDaysReducer = (state: WeekDayObjType[], action: TargetWeekDayRed
       if (targetIndex === -1) return;
       nextState[targetIndex] = {...nextState[targetIndex], value};
     });
+  }
+  if (action.type === 'setCheckAll') {
+    for (const weekDayObj of nextState) {
+      weekDayObj.value = action.payload.value;
+    }
   }
   return nextState;
 };
@@ -105,20 +116,18 @@ const TopPage = () => {
   }, [targetWeekDays]);
 
   const allCheckHandler = useCallback(() => dispatchTargetWeekDays({
-    type: 'setCheck',
-    payload: targetWeekDays.map(({id}) => ({
-      id,
-      value: true
-    }))
-  }), [targetWeekDays]);
+    type: 'setCheckAll',
+    payload: {
+      value: false
+    }
+  }), []);
 
   const allNotCheckHandler = useCallback(() => dispatchTargetWeekDays({
-    type: 'setCheck',
-    payload: targetWeekDays.map(({id}) => ({
-      id,
+    type: 'setCheckAll',
+    payload: {
       value: false
-    }))
-  }), [targetWeekDays]);
+    }
+  }), []);
 
   // 平日のみ選択
   const weekdaysCheckHandler = useCallback(() => {
@@ -149,8 +158,10 @@ const TopPage = () => {
       <h2>通知設定</h2>
       <h3>通知したい曜日</h3>
       <form onSubmit={submitHandler}>
-        {targetWeekDays.map(({id, text, value}) => <CheckBox key={id} checked={value} id={`checkbox${id}`} onChange={checkboxHandler(id)} >{text}</CheckBox>)}
-        <div>
+        <div className={cn(styles.flexBox, styles.checkboxWrapper)}>
+          {targetWeekDays.map(({id, text, value}) => <CheckBox key={id} checked={value} id={`checkbox${id}`} onChange={checkboxHandler(id)} >{text}</CheckBox>)}
+        </div>
+        <div className={cn(styles.flexBox, styles.handleButtonWrapper)}>
           <ButtonAsTypeButton className={styles.selectionButton} onClick={allCheckHandler}>全て選択</ButtonAsTypeButton>
           <ButtonAsTypeButton className={styles.selectionButton} onClick={allNotCheckHandler}>全て選択解除</ButtonAsTypeButton>
           <ButtonAsTypeButton className={styles.selectionButton} onClick={weekdaysCheckHandler}>平日のみ選択</ButtonAsTypeButton>
