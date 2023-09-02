@@ -1,5 +1,5 @@
 {
-  "extends": ["next/core-web-vitals", "next"],
+  "extends": ["next/core-web-vitals", "next", "next/babel"],
   "rules": {
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "error"
