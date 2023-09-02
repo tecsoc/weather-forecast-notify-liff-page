@@ -1,4 +1,4 @@
-const path = require('path');
+const path = require("path");
 
 /** @type {import('next').NextConfig} */
 const isProduction = process.env.NODE_ENV === "production";
@@ -8,10 +8,10 @@ const repositoryName = repository?.replace(repositoryOwner, "");
 
 const nextConfig = {
   sassOptions: {
-    includePaths: [path.join(__dirname, 'styles')],
+    includePaths: [path.join(__dirname, "styles")],
   },
   assetPrefix: isProduction ? repositoryName : "",
-  output: "export"
+  output: "export",
 };
 
-module.exports = nextConfig
+module.exports = nextConfig;

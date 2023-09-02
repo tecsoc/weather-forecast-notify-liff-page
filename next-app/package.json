@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint --max-warnings 0",
-    "lint:fix": "next lint --fix"
+    "lint:fix": "next lint --fix",
+    "fmt": "prettier --write .",
+    "fmt:check": "prettier --check ."
   },
   "dependencies": {
     "@line/liff": "^2.22.3",
@@ -23,6 +25,7 @@
   },
   "devDependencies": {
     "eslint-config-prettier": "^9.0.0",
+    "prettier": "^3.0.3",
     "sass": "^1.66.1"
   }
 }
