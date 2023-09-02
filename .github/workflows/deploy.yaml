@@ -9,7 +9,7 @@ on:
       - main
 defaults:
   run:
-    working-directory: ${{ github.workspace }}/next-app
+    working-directory: next-app
 permissions:
   contents: read
   pages: write
@@ -22,7 +22,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v3
         with:
-          node-version-file: .nvmrc
+          node-version-file: next-app/.nvmrc
           cache: pnpm
       - uses: pnpm/action-setup@v2
         with:
