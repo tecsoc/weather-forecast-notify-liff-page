@@ -24,6 +24,7 @@ jobs:
         with:
           node-version-file: next-app/.nvmrc
           cache: pnpm
+          cache-dependency-path: next-app
       - uses: pnpm/action-setup@v2
         with:
           version: latest
