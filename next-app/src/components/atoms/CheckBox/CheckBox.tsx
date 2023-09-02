@@ -2,9 +2,7 @@ import cn from "@/modules/ts/cn";
 import React, { HTMLInputTypeAttribute } from "react";
 import styles from "./CheckBox.module.scss";
 
-type CheckBoxProps = Partial<JSX.IntrinsicElements['input']> & {
-  id: string;
-};
+type CheckBoxProps = Partial<JSX.IntrinsicElements['input']> & Required<Pick<JSX.IntrinsicElements['input'], 'id'>>;
 
 const CheckBox = (props : CheckBoxProps) => {
   const defaultChecked = props.defaultChecked ?? true;
