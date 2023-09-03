@@ -11,7 +11,7 @@ import React, {
 import ButtonAsTypeButton from "@/components/atoms/ButtonAsTypeButton/ButtonAsTypeButton";
 import cn from "@/modules/ts/cn";
 import liff from "@line/liff";
-import { defalutTargetWeekdays, settingApiEndpoint } from "@/modules/ts/const";
+import { allCheckPayload, allNotCheckPayload, defalutTargetWeekdays, settingApiEndpoint } from "@/modules/ts/const";
 import WeekdayCheckBox from "./atoms/WeekdayCheckBox/WeekdayCheckBox";
 import { log } from "console";
 import { getFetchUrl } from "@/modules/ts/fetch";
@@ -34,7 +34,7 @@ export type TargetWeekdayReducerActionType =
       type: "setCheckAll";
       payload: {
         value: boolean;
-      };
+      }[];
     }
   | {
       type: "setCheckWeekdays";
@@ -55,9 +55,9 @@ const targetWeekdaysReducer = (
     });
   }
   if (action.type === "setCheckAll") {
-    for (const weekdayObj of nextState) {
-      weekdayObj.value = action.payload.value;
-    }
+    Object.values(nextState).forEach((weekdayObj, i) => {
+      nextState[i] = { ...weekdayObj, value: action.payload[i].value };
+    });
   }
   // 平日のみ選択
   if (action.type === "setCheckWeekdays") {
@@ -90,9 +90,7 @@ const TopPage = () => {
     () =>
       dispatchTargetWeekdays({
         type: "setCheckAll",
-        payload: {
-          value: true,
-        },
+        payload: allCheckPayload,
       }),
     [],
   );
@@ -101,9 +99,7 @@ const TopPage = () => {
     () =>
       dispatchTargetWeekdays({
         type: "setCheckAll",
-        payload: {
-          value: false,
-        },
+        payload: allNotCheckPayload,
       }),
     [],
   );
@@ -157,8 +153,17 @@ const TopPage = () => {
         withLoginOnExternalBrowser: true,
       });
       if (liff.isLoggedIn()) {
-        const {displayName: userName} = await liff.getProfile();
+        const {displayName: userName, userId} = await liff.getProfile();
         setUserName(userName);
+        const url = getFetchUrl(settingApiEndpoint, {
+          userId
+        });
+        const { settings }: {settings: number[]} = await (await fetch(url)).json();
+        const payload = settings.map(value => ({value: Boolean(value)}));
+        dispatchTargetWeekdays({
+          type: "setCheckAll",
+          payload,
+        });
       }
     })();
   }, []);
