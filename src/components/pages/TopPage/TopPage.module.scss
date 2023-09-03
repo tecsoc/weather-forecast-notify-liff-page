@@ -1,3 +1,19 @@
+@use "@/modules/styles/breakpoints.scss" as *;
+
+.mainArea {
+  :global(h1) {
+    margin-bottom: 0.8rem;
+  }
+  :global(h2) {
+    margin-bottom: 0;
+    margin-top: 0.8rem;
+  }
+  :global(h3) {
+    margin: 0.2rem 0;
+  }
+
+}
+
 .flexBox {
   display: flex;
   justify-content: flex-start;
@@ -7,12 +23,13 @@
 
 .checkboxWrapper {
   gap: 10px;
-  margin: 25px 0;
+  margin-bottom: 1.5px;
+  margin-top: 1rem;
 }
 
 .handleButtonWrapper {
-  gap: 15px 10px;
-  margin: 25px 0;
+  gap: 10px 10px;
+  margin: 15px 0;
 }
 
 .selectionButton {
@@ -27,7 +44,7 @@
 }
 
 .submitButton {
-  margin: 40px auto;
+  margin: 1.5rem auto;
   display: block;
   padding: 15px 40px;
   font-weight: bold;
@@ -40,5 +57,10 @@
 }
 
 .loadingArea {
-  margin: 0 12rem;
+  margin: 2rem 4rem;
+  width: calc(100% - 4rem * 2);
+  @media (min-width: $pc-min-wdith) {
+    margin: 0 20rem;
+    width: calc(100% - 20rem * 2);
+  }
 }
