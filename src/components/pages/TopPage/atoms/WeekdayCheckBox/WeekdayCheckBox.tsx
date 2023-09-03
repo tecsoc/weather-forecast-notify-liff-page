@@ -16,10 +16,6 @@ const WeekdayCheckBox = ({
 }: WeekdayCheckBoxProps) => {
   const onChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      console.log("WeekdayCheckBox onChange");
-      console.log(e.target.checked);
-      console.log(props.id);
-
       onChangeDispatch({
         type: "setCheck",
         payload: [
