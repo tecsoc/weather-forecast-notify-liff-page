@@ -13,7 +13,6 @@ import cn from "@/modules/ts/cn";
 import liff from "@line/liff";
 import { allCheckPayload, allNotCheckPayload, defalutTargetWeekdays, settingApiEndpoint } from "@/modules/ts/const";
 import WeekdayCheckBox from "./atoms/WeekdayCheckBox/WeekdayCheckBox";
-import { log } from "console";
 import { getFetchUrl } from "@/modules/ts/fetch";
 
 type WeekdayObjType = {
