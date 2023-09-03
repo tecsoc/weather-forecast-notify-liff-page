@@ -7,9 +7,6 @@ on:
     types: [opened, synchronize, reopened]
     branches:
       - main
-defaults:
-  run:
-    working-directory: next-app
 permissions:
   contents: read
   pages: write
@@ -22,7 +19,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v3
         with:
-          node-version-file: next-app/.nvmrc
+          node-version-file: .nvmrc
       - uses: pnpm/action-setup@v2
         with:
           version: latest
