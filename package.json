@@ -27,5 +27,12 @@
     "eslint-config-prettier": "^9.0.0",
     "prettier": "^3.0.3",
     "sass": "^1.66.1"
-  }
+  },
+  "browserslist": [
+    "chrome 64",
+    "edge 79",
+    "firefox 67",
+    "opera 51",
+    "safari 12"
+  ]
 }

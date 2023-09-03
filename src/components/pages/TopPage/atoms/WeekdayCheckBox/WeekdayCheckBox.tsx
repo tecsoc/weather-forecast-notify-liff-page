@@ -4,7 +4,7 @@ import { TargetWeekdayReducerActionType } from "../../TopPage";
 
 type WeekdayCheckBoxProps = Exclude<
   ComponentProps<typeof CheckBox> & {},
-  "onChange"
+  "onChange" | "defaultChecked",
 > & {
   onChangeDispatch: React.Dispatch<TargetWeekdayReducerActionType>;
   id: string;
