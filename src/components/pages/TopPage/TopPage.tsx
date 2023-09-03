@@ -14,6 +14,7 @@ import liff from "@line/liff";
 import { allCheckPayload, allNotCheckPayload, defalutTargetWeekdays, settingApiEndpoint } from "@/modules/ts/const";
 import WeekdayCheckBox from "./atoms/WeekdayCheckBox/WeekdayCheckBox";
 import { getFetchUrl } from "@/modules/ts/fetch";
+import LoadingArea from "./atoms/LoadingArea/LoadingArea";
 
 type WeekdayObjType = {
   id: string;
@@ -74,6 +75,7 @@ const targetWeekdaysReducer = (
 const TopPage = () => {
   const [userName, setUserName] = useState("");
   const isLoggedIn = useMemo(() => userName === '' ? null : Boolean(userName), [userName]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const [targetWeekdays, dispatchTargetWeekdays] = useReducer<
     React.Reducer<WeekdayObjType[], TargetWeekdayReducerActionType>
@@ -163,58 +165,68 @@ const TopPage = () => {
           type: "setCheckAll",
           payload,
         });
+        setIsLoading(false);
       }
     })();
   }, []);
 
+  const loadingArea = useMemo(() => (
+    <LoadingArea className={styles.loadingArea} />
+  ), []);
+
   return (
     <main>
       <h1>毎日5時に天気予報</h1>
+      {!isLoggedIn && isLoading && loadingArea}
       {isLoggedIn && (
         <div>
           <h3>{userName}さんようこそ</h3>
-          <h2>通知設定</h2>
-          <h3>通知したい曜日</h3>
-          <form ref={setFormRef} onSubmit={submitHandler}>
-            <div className={cn(styles.flexBox, styles.checkboxWrapper)}>
-              {targetWeekdays.map(({ id, text, value }) => (
-                <WeekdayCheckBox
-                  key={id}
-                  checked={value}
-                  id={id}
-                  onChangeDispatch={dispatchTargetWeekdays}
+          {isLoading ? loadingArea : (
+            <>
+              <h2>通知設定</h2>
+              <h3>通知したい曜日</h3>
+              <form ref={setFormRef} onSubmit={submitHandler}>
+                <div className={cn(styles.flexBox, styles.checkboxWrapper)}>
+                  {targetWeekdays.map(({ id, text, value }) => (
+                    <WeekdayCheckBox
+                      key={id}
+                      checked={value}
+                      id={id}
+                      onChangeDispatch={dispatchTargetWeekdays}
+                    >
+                      {text}
+                    </WeekdayCheckBox>
+                  ))}
+                </div>
+                <div className={cn(styles.flexBox, styles.handleButtonWrapper)}>
+                  <ButtonAsTypeButton
+                    className={styles.selectionButton}
+                    onClick={allCheckHandler}
+                  >
+                    全て選択
+                  </ButtonAsTypeButton>
+                  <ButtonAsTypeButton
+                    className={styles.selectionButton}
+                    onClick={allNotCheckHandler}
+                  >
+                    全て選択解除
+                  </ButtonAsTypeButton>
+                  <ButtonAsTypeButton
+                    className={styles.selectionButton}
+                    onClick={weekdaysCheckHandler}
+                  >
+                    平日のみ選択
+                  </ButtonAsTypeButton>
+                </div>
+                <button
+                  type="submit"
+                  className={styles.submitButton}
                 >
-                  {text}
-                </WeekdayCheckBox>
-              ))}
-            </div>
-            <div className={cn(styles.flexBox, styles.handleButtonWrapper)}>
-              <ButtonAsTypeButton
-                className={styles.selectionButton}
-                onClick={allCheckHandler}
-              >
-                全て選択
-              </ButtonAsTypeButton>
-              <ButtonAsTypeButton
-                className={styles.selectionButton}
-                onClick={allNotCheckHandler}
-              >
-                全て選択解除
-              </ButtonAsTypeButton>
-              <ButtonAsTypeButton
-                className={styles.selectionButton}
-                onClick={weekdaysCheckHandler}
-              >
-                平日のみ選択
-              </ButtonAsTypeButton>
-            </div>
-            <button
-              type="submit"
-              className={styles.submitButton}
-            >
-              設定を更新
-            </button>
-          </form>
+                  設定を更新
+                </button>
+              </form>
+            </>
+          )}
         </div>
       )}
       {isLoggedIn === false && (
