@@ -1,21 +1,22 @@
 import cn from "@/modules/ts/cn";
-import React, { HTMLInputTypeAttribute } from "react";
+import React from "react";
 import styles from "./CheckBox.module.scss";
 
 type CheckBoxProps = Partial<JSX.IntrinsicElements["input"]> &
   Required<Pick<JSX.IntrinsicElements["input"], "id">>;
 
 const CheckBox = (props: CheckBoxProps) => {
-  const defaultChecked = props.defaultChecked ?? true;
-  const inputType = props.type ?? ("checkbox" as HTMLInputTypeAttribute);
-  const { children, ...inputArgs } = props;
+  const { type, defaultChecked: defalutChk, className: cln, children, ...inputArgs } = props;
+  const className = cn(styles.checkboxInput, cln);
+  const inputType = type ?? "checkbox";
+  const defalutChecked = defalutChk ?? true;
 
   return (
     <>
       <input
         type={inputType}
-        className={cn(styles.checkboxInput, props.className)}
-        {...(props.checked ? {} : { defaultChecked: defaultChecked })}
+        className={className}
+        defaultChecked={defalutChecked}
         {...inputArgs}
       />
       <label className={styles.checkboxLabel} htmlFor={props.id}>
