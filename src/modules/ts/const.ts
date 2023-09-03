@@ -44,3 +44,5 @@ export const defalutTargetWeekdays = [
     ...defaultValue,
   },
 ];
+
+export const settingApiEndpoint = "https://script.google.com/macros/s/AKfycbzjUPYVvB9EA-sxSiax_euKuRKPl0VFK6TS8qYWJLca9oM9V7uijNNhKonATGndOWGM4Q/exec";

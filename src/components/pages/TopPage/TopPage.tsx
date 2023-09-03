@@ -6,20 +6,15 @@ import React, {
   useRef,
   useState,
   useLayoutEffect,
+  useMemo,
 } from "react";
 import ButtonAsTypeButton from "@/components/atoms/ButtonAsTypeButton/ButtonAsTypeButton";
 import cn from "@/modules/ts/cn";
 import liff from "@line/liff";
-import { defalutTargetWeekdays } from "@/modules/ts/const";
+import { defalutTargetWeekdays, settingApiEndpoint } from "@/modules/ts/const";
 import WeekdayCheckBox from "./atoms/WeekdayCheckBox/WeekdayCheckBox";
-
-
-const LiffStateObject = {
-  notApplicable: 0,
-  login: 1,
-  isLiff: 2,
-} as const;
-type LiffStateType = typeof LiffStateObject[keyof typeof LiffStateObject];
+import { log } from "console";
+import { getFetchUrl } from "@/modules/ts/fetch";
 
 type WeekdayObjType = {
   id: string;
@@ -78,8 +73,8 @@ const targetWeekdaysReducer = (
 };
 
 const TopPage = () => {
-  const [liffState, setLiffState] = useState<LiffStateType>(LiffStateObject.notApplicable);
   const [userName, setUserName] = useState("");
+  const isLoggedIn = useMemo(() => userName === '' ? null : Boolean(userName), [userName]);
 
   const [targetWeekdays, dispatchTargetWeekdays] = useReducer<
     React.Reducer<WeekdayObjType[], TargetWeekdayReducerActionType>
@@ -123,24 +118,34 @@ const TopPage = () => {
 
   const submitHandler = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
-      const notifyWeekdayArray = Array.from(
-        formRef?.current?.getElementsByTagName("input") ?? [],
-      ).map(({ checked }) => Number(checked));
-      const message = `@詳細設定\n${notifyWeekdayArray.join(",")}`;
-      try {
-        await liff.sendMessages([
-          {
-            type: "text",
-            text: message,
-          },
-        ]);
-        alert("設定を更新しました。ウィンドウを閉じます");
-        liff.closeWindow();
-      } catch (error) {
-        console.error("failed to send message", error);
-        alert("設定の更新に失敗しました。");
-      }
       e.preventDefault();
+      const notifyWeekdayArray = Array.from<HTMLInputElement>(
+        formRef?.current?.getElementsByTagName("input") ?? [],
+      ).map(({checked}) => Number(checked));
+      const { userId } = await liff.getProfile();
+      const body = {
+        type: "updateSetting",
+        userId,
+        settings: notifyWeekdayArray,
+      };
+      try {
+        const url = getFetchUrl(settingApiEndpoint, body);      
+        const response = await (await fetch(url)).json();
+        if (response.result) {
+          let commonMessage = "設定を設定を更新しました。";
+          if (liff.isInClient()) {
+            alert(`${commonMessage}\nウィンドウを閉じます`);
+            liff.closeWindow();
+          } else {
+            alert(commonMessage);
+          }
+        } else {
+          throw new Error("Server Error");
+        }
+      } catch (error) {
+        console.error(error);
+        alert(`設定の更新に失敗しました。\n${error}`);
+      }
     },
     [],
   );
@@ -151,25 +156,19 @@ const TopPage = () => {
         liffId: "2000603396-QBE1npvl",
         withLoginOnExternalBrowser: true,
       });
-      let liffEnum = 0;
       if (liff.isLoggedIn()) {
-        liffEnum += 1;
-        const userName = (await liff.getProfile()).displayName;
+        const {displayName: userName} = await liff.getProfile();
         setUserName(userName);
-        if (liff.isInClient()) {
-          liffEnum += 1;
-        }
       }
-      setLiffState(liffEnum as LiffStateType);
     })();
   }, []);
 
   return (
     <main>
       <h1>毎日5時に天気予報</h1>
-      {userName && <h3>{userName}さんようこそ</h3>}
-      {liffState > LiffStateObject.notApplicable && (
+      {isLoggedIn && (
         <div>
+          <h3>{userName}さんようこそ</h3>
           <h2>通知設定</h2>
           <h3>通知したい曜日</h3>
           <form ref={setFormRef} onSubmit={submitHandler}>
@@ -208,20 +207,14 @@ const TopPage = () => {
             <button
               type="submit"
               className={styles.submitButton}
-              disabled={liffState < LiffStateObject.isLiff}
             >
               設定を更新
             </button>
-            {liffState < LiffStateObject.isLiff && (
-              <p>LIFFブラウザから開いてください</p>
-            )}
-            {liffState === LiffStateObject.login && (
-              <p>
-                ※LIFFブラウザから開かないと設定の更新はできませんが、設定を確認することはできます。
-              </p>
-            )}
           </form>
         </div>
+      )}
+      {isLoggedIn === false && (
+       <p>LIFFブラウザから開くか、ログインしてください</p> 
       )}
     </main>
   );
