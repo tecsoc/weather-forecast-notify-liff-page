@@ -1,13 +1,11 @@
 "use client";
 import styles from "./TopPage.module.scss";
-import CheckBox from "@/components/atoms/CheckBox/CheckBox";
 import React, {
   useReducer,
   useCallback,
   useRef,
   useState,
   useLayoutEffect,
-  useMemo,
 } from "react";
 import ButtonAsTypeButton from "@/components/atoms/ButtonAsTypeButton/ButtonAsTypeButton";
 import cn from "@/modules/ts/cn";
@@ -15,11 +13,13 @@ import liff from "@line/liff";
 import { defalutTargetWeekdays } from "@/modules/ts/const";
 import WeekdayCheckBox from "./atoms/WeekdayCheckBox/WeekdayCheckBox";
 
-enum LiffStateEnum {
-  notApplicable,
-  login,
-  isLiff,
-}
+
+const LiffStateObject = {
+  notApplicable: 0,
+  login: 1,
+  isLiff: 2,
+} as const;
+type LiffStateType = typeof LiffStateObject[keyof typeof LiffStateObject];
 
 type WeekdayObjType = {
   id: string;
@@ -78,9 +78,7 @@ const targetWeekdaysReducer = (
 };
 
 const TopPage = () => {
-  const [liffState, setLiffState] = useState<LiffStateEnum>(
-    LiffStateEnum.notApplicable,
-  );
+  const [liffState, setLiffState] = useState<LiffStateType>(LiffStateObject.notApplicable);
   const [userName, setUserName] = useState("");
 
   const [targetWeekdays, dispatchTargetWeekdays] = useReducer<
@@ -162,7 +160,7 @@ const TopPage = () => {
           liffEnum += 1;
         }
       }
-      setLiffState(liffEnum);
+      setLiffState(liffEnum as LiffStateType);
     })();
   }, []);
 
@@ -170,7 +168,7 @@ const TopPage = () => {
     <main>
       <h1>毎日5時に天気予報</h1>
       {userName && <h3>{userName}さんようこそ</h3>}
-      {liffState > LiffStateEnum.notApplicable && (
+      {liffState > LiffStateObject.notApplicable && (
         <div>
           <h2>通知設定</h2>
           <h3>通知したい曜日</h3>
@@ -210,14 +208,14 @@ const TopPage = () => {
             <button
               type="submit"
               className={styles.submitButton}
-              disabled={liffState < LiffStateEnum.isLiff}
+              disabled={liffState < LiffStateObject.isLiff}
             >
               設定を更新
             </button>
-            {liffState < LiffStateEnum.isLiff && (
+            {liffState < LiffStateObject.isLiff && (
               <p>LIFFブラウザから開いてください</p>
             )}
-            {liffState === LiffStateEnum.login && (
+            {liffState === LiffStateObject.login && (
               <p>
                 ※LIFFブラウザから開かないと設定の更新はできませんが、設定を確認することはできます。
               </p>
