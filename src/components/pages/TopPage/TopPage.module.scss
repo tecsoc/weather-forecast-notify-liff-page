@@ -2,12 +2,15 @@
 
 .mainArea {
   :global(h1) {
-    margin-bottom: 0.8rem;
+    font-size: 175%;
+    margin-bottom: 0.5rem;
   }
   :global(h2) {
-    margin: 0.8rem 0;
+    font-size: 140%;
+    margin: 0.6rem 0;
   }
   :global(h3) {
+    font-size: 115%;
     margin: 0.4rem 0;
   }
 
@@ -31,7 +34,7 @@
 
 .handleButtonWrapper {
   gap: 0.8rem;
-  margin: 0.8rem 0 1.6rem;
+  margin: 0.8rem 0 1.2rem;
 }
 
 .selectionButton {
@@ -67,6 +70,10 @@
 
 .baseRainfallProbabilityWrapper {
   $iconwidth: 0.75rem;
+
+  :global(h3) {
+    margin: 0;
+  }
 
   position: relative;
   gap: 2rem;
