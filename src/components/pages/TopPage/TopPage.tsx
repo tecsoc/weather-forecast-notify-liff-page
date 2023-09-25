@@ -22,10 +22,10 @@ const rainfallProbabilities = Array.from({
 (_, i) => i * 10,
 );
 
-type ApiRespone = {
+type ApiResponse = {
   settings: number[];
-  baseRainfallProbabilites: number;
-}
+  baseRainfallProbabilities: number;
+};
 
 type WeekdayObjType = {
   id: string;
@@ -127,7 +127,7 @@ const TopPage = () => {
   const submitHandler = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      const baseRainfallProbabilites = formRef?.current?.baseRainfallProbabilites.value;
+      const baseRainfallProbabilities = formRef?.current?.baseRainfallProbabilities.value;
       const notifyWeekdayArray = Array.from<HTMLInputElement>(
         formRef?.current?.getElementsByTagName("input") ?? [],
       ).map(({checked}) => Number(checked));
@@ -136,7 +136,7 @@ const TopPage = () => {
         type: "updateSetting",
         userId,
         settings: notifyWeekdayArray,
-        baseRainfallProbabilites,
+        baseRainfallProbabilities: baseRainfallProbabilities,
       };
       try {
         const url = getFetchUrl(settingApiEndpoint, body);      
@@ -172,9 +172,12 @@ const TopPage = () => {
         const url = getFetchUrl(settingApiEndpoint, {
           userId
         });
-        const { settings, baseRainfallProbabilites }: ApiRespone = await (await fetch(url)).json();
-        if (formRef?.current?.baseRainfallProbabilites) {
-          formRef.current.baseRainfallProbabilites.value = baseRainfallProbabilites;
+        const { settings, baseRainfallProbabilities }: ApiResponse = await (
+          await fetch(url)
+        ).json();
+        if (formRef?.current?.baseRainfallProbabilities) {
+          formRef.current.baseRainfallProbabilities.value =
+          baseRainfallProbabilities;
         }
         const payload = settings.map(value => ({value: Boolean(value)}));
         dispatchTargetWeekdays({
@@ -235,9 +238,14 @@ const TopPage = () => {
                   </ButtonAsTypeButton>
                 </div>
                 <div>
-                  <div className={cn(styles.flexBox, styles.baseRainfallProbabilitesWrapper)}>
+                  <div
+                    className={cn(
+                      styles.flexBox,
+                      styles.baseRainfallProbabilitiesWrapper,
+                    )}
+                  >
                     <h3>通知基準降水確率</h3>
-                    <select name="baseRainfallProbabilites">
+                    <select name="baseRainfallProbabilities">
                       {rainfallProbabilities.map((value) => (
                         <option key={value} value={value}>
                           {value}%
