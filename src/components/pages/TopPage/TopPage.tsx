@@ -30,7 +30,7 @@ const rainfallProbabilities = Array.from(
 
 type ApiResponse = {
   settings: number[];
-  baseRainfallProbabilities: number;
+  baseRainfallProbability: number;
 };
 
 type WeekdayObjType = {
@@ -136,8 +136,8 @@ const TopPage = () => {
   const submitHandler = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      const baseRainfallProbabilities =
-        formRef?.current?.baseRainfallProbabilities.value;
+      const baseRainfallProbability =
+        formRef?.current?.baseRainfallProbability.value;
       const notifyWeekdayArray = Array.from<HTMLInputElement>(
         formRef?.current?.getElementsByTagName("input") ?? [],
       ).map(({ checked }) => Number(checked));
@@ -146,7 +146,7 @@ const TopPage = () => {
         type: "updateSetting",
         userId,
         settings: notifyWeekdayArray,
-        baseRainfallProbabilities: baseRainfallProbabilities,
+        baseRainfallProbability: baseRainfallProbability,
       };
       try {
         const url = getFetchUrl(settingApiEndpoint, body);
@@ -182,12 +182,12 @@ const TopPage = () => {
         const url = getFetchUrl(settingApiEndpoint, {
           userId,
         });
-        const { settings, baseRainfallProbabilities }: ApiResponse = await (
+        const { settings, baseRainfallProbability }: ApiResponse = await (
           await fetch(url)
         ).json();
-        if (formRef?.current?.baseRainfallProbabilities) {
-          formRef.current.baseRainfallProbabilities.value =
-            baseRainfallProbabilities;
+        if (formRef?.current?.baseRainfallProbability) {
+          formRef.current.baseRainfallProbability.value =
+            baseRainfallProbability;
         }
         const payload = settings.map((value) => ({ value: Boolean(value) }));
         dispatchTargetWeekdays({
@@ -254,11 +254,11 @@ const TopPage = () => {
                   <div
                     className={cn(
                       styles.flexBox,
-                      styles.baseRainfallProbabilitiesWrapper,
+                      styles.baseRainfallProbabilityWrapper,
                     )}
                   >
                     <h3>通知基準降水確率</h3>
-                    <select name="baseRainfallProbabilities">
+                    <select name="baseRainfallProbability">
                       {rainfallProbabilities.map((value) => (
                         <option key={value} value={value}>
                           {value}%
