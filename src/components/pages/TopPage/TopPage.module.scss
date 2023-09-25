@@ -5,13 +5,15 @@
     margin-bottom: 0.8rem;
   }
   :global(h2) {
-    margin-bottom: 0;
-    margin-top: 0.8rem;
+    margin: 0.8rem 0;
   }
   :global(h3) {
-    margin: 0.2rem 0;
+    margin: 0.4rem 0;
   }
 
+  :global(p) {
+    margin: 0.75rem 0;
+  }
 }
 
 .flexBox {
@@ -28,15 +30,14 @@
 }
 
 .handleButtonWrapper {
-  gap: 10px 10px;
-  margin: 15px 0;
+  gap: 0.8rem;
+  margin: 0.8rem 0 1.6rem;
 }
 
 .selectionButton {
-  padding: 9px 12px;
-  border-radius: 22px;
-  display: inline-block;
-  font-size: 100%;
+  padding: 8px 10px;
+  border-radius: 1.1rem;
+  font-size: 90%;
   outline: none;
   font-weight: bolder;
   color: #33c634;
@@ -46,13 +47,12 @@
 .submitButton {
   margin: 1.5rem auto;
   display: block;
-  padding: 15px 40px;
+  padding: 0.8rem 1.6rem;
   font-weight: bold;
-  font-size: 20px;
-  border-width: 5px;
+  font-size: 115%;
   background: #16c464;
   border: none;
-  border-radius: 22px;
+  border-radius: 1.2rem;
   color: white;
 }
 
@@ -62,5 +62,43 @@
   @media (min-width: $pc-min-wdith) {
     margin: 0 20rem;
     width: calc(100% - 20rem * 2);
+  }
+}
+
+.baseRainfallProbabilitesWrapper {
+  $iconwidth: 0.75rem;
+
+  position: relative;
+  gap: 2rem;
+  justify-content: stretch;
+
+  &:after {
+    position: absolute;
+    right: 1rem;
+    width: $iconwidth;
+    height: $iconwidth * 0.7;
+    background-color: #535353;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    content: "";
+    pointer-events: none;
+  }
+
+  :global(select) {
+    $horizontalPadding: 1.2rem;
+
+    flex: 1;
+    appearance: none;
+    padding: 0.4rem calc($horizontalPadding + $iconwidth * 2) 0.4rem
+      $horizontalPadding;
+    border: none;
+    border-bottom: 2px solid #cccccc;
+    background-color: #fff;
+    color: #333333;
+    font-size: 100%;
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+    }
   }
 }
