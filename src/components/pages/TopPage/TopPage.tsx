@@ -22,6 +22,11 @@ const rainfallProbabilities = Array.from({
 (_, i) => i * 10,
 );
 
+type ApiRespone = {
+  settings: number[];
+  baseRainfallProbabilites: number;
+}
+
 type WeekdayObjType = {
   id: string;
   text: string;
@@ -79,9 +84,9 @@ const targetWeekdaysReducer = (
 };
 
 const TopPage = () => {
-  const [userName, setUserName] = useState("");
+  const [userName, setUserName] = useState("ffff");
   const isLoggedIn = useMemo(() => userName === '' ? null : Boolean(userName), [userName]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [targetWeekdays, dispatchTargetWeekdays] = useReducer<
     React.Reducer<WeekdayObjType[], TargetWeekdayReducerActionType>
@@ -122,6 +127,7 @@ const TopPage = () => {
   const submitHandler = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
+      const baseRainfallProbabilites = formRef?.current?.baseRainfallProbabilites.value;
       const notifyWeekdayArray = Array.from<HTMLInputElement>(
         formRef?.current?.getElementsByTagName("input") ?? [],
       ).map(({checked}) => Number(checked));
@@ -130,6 +136,7 @@ const TopPage = () => {
         type: "updateSetting",
         userId,
         settings: notifyWeekdayArray,
+        baseRainfallProbabilites,
       };
       try {
         const url = getFetchUrl(settingApiEndpoint, body);      
@@ -155,24 +162,27 @@ const TopPage = () => {
 
   useLayoutEffect(() => {
     (async () => {
-    await liff.init({
-    liffId: "2000603396-QBE1npvl",
-    withLoginOnExternalBrowser: true,
-    });
-    if (liff.isLoggedIn()) {
-    const {displayName: userName, userId} = await liff.getProfile();
-    setUserName(userName);
-    const url = getFetchUrl(settingApiEndpoint, {
-    userId
-    });
-    const { settings }: {settings: number[]} = await (await fetch(url)).json();
-    const payload = settings.map(value => ({value: Boolean(value)}));
-    dispatchTargetWeekdays({
-    type: "setCheckAll",
-    payload,
-    });
-    setIsLoading(false);
-    }
+        await liff.init({
+        liffId: "2000603396-QBE1npvl",
+        withLoginOnExternalBrowser: true,
+      });
+      if (liff.isLoggedIn()) {
+        const {displayName: userName, userId} = await liff.getProfile();
+        setUserName(userName);
+        const url = getFetchUrl(settingApiEndpoint, {
+          userId
+        });
+        const { settings, baseRainfallProbabilites }: ApiRespone = await (await fetch(url)).json();
+        if (formRef?.current?.baseRainfallProbabilites) {
+          formRef.current.baseRainfallProbabilites.value = baseRainfallProbabilites;
+        }
+        const payload = settings.map(value => ({value: Boolean(value)}));
+        dispatchTargetWeekdays({
+          type: "setCheckAll",
+          payload,
+        });
+        setIsLoading(false);  
+      }
     })();
   }, []);
 
@@ -227,7 +237,7 @@ const TopPage = () => {
                 <div>
                   <div className={cn(styles.flexBox, styles.baseRainfallProbabilitesWrapper)}>
                     <h3>通知基準降水確率</h3>
-                    <select>
+                    <select name="baseRainfallProbabilites">
                       {rainfallProbabilities.map((value) => (
                         <option key={value} value={value}>
                           {value}%
