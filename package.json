@@ -9,7 +9,8 @@
     "lint": "next lint --max-warnings 0",
     "lint:fix": "next lint --fix",
     "fmt": "prettier --write .",
-    "fmt:check": "prettier --check ."
+    "fmt:check": "prettier --check .",
+    "fix:all": "pnpm lint:fix && pnpm fmt"
   },
   "dependencies": {
     "@line/liff": "^2.22.3",

@@ -1,10 +1,5 @@
 {
-  "extends": [
-    "next/core-web-vitals",
-    "next",
-    "prettier",
-    "eslint:recommended"
-  ],
+  "extends": ["next/core-web-vitals", "next", "prettier", "eslint:recommended"],
   "rules": {
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "error"

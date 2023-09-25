@@ -5,7 +5,9 @@ $thirdColor: #8ac926;
 $fourthColor: #1982c4;
 $displayCount: 3;
 $displayWidth: 15%;
-$secondX: calc(100% + (100% - $displayCount * $displayWidth) / 2 / $displayWidth * 100%);
+$secondX: calc(
+  100% + (100% - $displayCount * $displayWidth) / 2 / $displayWidth * 100%
+);
 
 @keyframes loading {
   0% {
@@ -15,7 +17,7 @@ $secondX: calc(100% + (100% - $displayCount * $displayWidth) / 2 / $displayWidth
     transform: translateX(0) scale(1);
   }
   50% {
-    transform: translateX($secondX)
+    transform: translateX($secondX);
   }
   75% {
     transform: translateX($secondX * 2);
