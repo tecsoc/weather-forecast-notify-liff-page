@@ -48,21 +48,22 @@ export const defalutTargetWeekdays = [
 const weekdayLength = defalutTargetWeekdays.length;
 
 export const allCheckPayload = Array.from(
-  { 
-    length: weekdayLength
+  {
+    length: weekdayLength,
   },
   () => ({
     value: true,
-  })
+  }),
 );
 
 export const allNotCheckPayload = Array.from(
   {
-    length: weekdayLength
+    length: weekdayLength,
   },
   () => ({
     value: false,
-  })
+  }),
 );
 
-export const settingApiEndpoint = "https://script.google.com/macros/s/AKfycbzjUPYVvB9EA-sxSiax_euKuRKPl0VFK6TS8qYWJLca9oM9V7uijNNhKonATGndOWGM4Q/exec";
+export const settingApiEndpoint =
+  "https://script.google.com/macros/s/AKfycbzjUPYVvB9EA-sxSiax_euKuRKPl0VFK6TS8qYWJLca9oM9V7uijNNhKonATGndOWGM4Q/exec";

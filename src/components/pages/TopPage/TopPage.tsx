@@ -11,21 +11,27 @@ import React, {
 import ButtonAsTypeButton from "@/components/atoms/ButtonAsTypeButton/ButtonAsTypeButton";
 import cn from "@/modules/ts/cn";
 import liff from "@line/liff";
-import { allCheckPayload, allNotCheckPayload, defalutTargetWeekdays, settingApiEndpoint } from "@/modules/ts/const";
+import {
+  allCheckPayload,
+  allNotCheckPayload,
+  defalutTargetWeekdays,
+  settingApiEndpoint,
+} from "@/modules/ts/const";
 import WeekdayCheckBox from "./atoms/WeekdayCheckBox/WeekdayCheckBox";
 import { getFetchUrl } from "@/modules/ts/fetch";
 import LoadingArea from "./atoms/LoadingArea/LoadingArea";
 
-const rainfallProbabilities = Array.from({
+const rainfallProbabilities = Array.from(
+  {
     length: 11,
   },
-(_, i) => i * 10,
+  (_, i) => i * 10,
 );
 
 type ApiRespone = {
   settings: number[];
   baseRainfallProbabilites: number;
-}
+};
 
 type WeekdayObjType = {
   id: string;
@@ -85,7 +91,10 @@ const targetWeekdaysReducer = (
 
 const TopPage = () => {
   const [userName, setUserName] = useState("ffff");
-  const isLoggedIn = useMemo(() => userName === '' ? null : Boolean(userName), [userName]);
+  const isLoggedIn = useMemo(
+    () => (userName === "" ? null : Boolean(userName)),
+    [userName],
+  );
   const [isLoading, setIsLoading] = useState(false);
 
   const [targetWeekdays, dispatchTargetWeekdays] = useReducer<
@@ -127,10 +136,11 @@ const TopPage = () => {
   const submitHandler = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      const baseRainfallProbabilites = formRef?.current?.baseRainfallProbabilites.value;
+      const baseRainfallProbabilites =
+        formRef?.current?.baseRainfallProbabilites.value;
       const notifyWeekdayArray = Array.from<HTMLInputElement>(
         formRef?.current?.getElementsByTagName("input") ?? [],
-      ).map(({checked}) => Number(checked));
+      ).map(({ checked }) => Number(checked));
       const { userId } = await liff.getProfile();
       const body = {
         type: "updateSetting",
@@ -139,7 +149,7 @@ const TopPage = () => {
         baseRainfallProbabilites,
       };
       try {
-        const url = getFetchUrl(settingApiEndpoint, body);      
+        const url = getFetchUrl(settingApiEndpoint, body);
         const response = await (await fetch(url)).json();
         if (response.result) {
           let commonMessage = "設定を設定を更新しました。";
@@ -162,42 +172,48 @@ const TopPage = () => {
 
   useLayoutEffect(() => {
     (async () => {
-        await liff.init({
+      await liff.init({
         liffId: "2000603396-QBE1npvl",
         withLoginOnExternalBrowser: true,
       });
       if (liff.isLoggedIn()) {
-        const {displayName: userName, userId} = await liff.getProfile();
+        const { displayName: userName, userId } = await liff.getProfile();
         setUserName(userName);
         const url = getFetchUrl(settingApiEndpoint, {
-          userId
+          userId,
         });
-        const { settings, baseRainfallProbabilites }: ApiRespone = await (await fetch(url)).json();
+        const { settings, baseRainfallProbabilites }: ApiRespone = await (
+          await fetch(url)
+        ).json();
         if (formRef?.current?.baseRainfallProbabilites) {
-          formRef.current.baseRainfallProbabilites.value = baseRainfallProbabilites;
+          formRef.current.baseRainfallProbabilites.value =
+            baseRainfallProbabilites;
         }
-        const payload = settings.map(value => ({value: Boolean(value)}));
+        const payload = settings.map((value) => ({ value: Boolean(value) }));
         dispatchTargetWeekdays({
           type: "setCheckAll",
           payload,
         });
-        setIsLoading(false);  
+        setIsLoading(false);
       }
     })();
   }, []);
 
-  const loadingArea = useMemo(() => (
-    <LoadingArea className={styles.loadingArea} />
-  ), []);
+  const loadingArea = useMemo(
+    () => <LoadingArea className={styles.loadingArea} />,
+    [],
+  );
 
   return (
     <main className={styles.mainArea}>
       <h1>毎日5時に天気予報</h1>
-            {!isLoggedIn && isLoading && loadingArea}
+      {!isLoggedIn && isLoading && loadingArea}
       {isLoggedIn && (
         <div>
           <h3>{userName}さんようこそ</h3>
-          {isLoading ? loadingArea : (
+          {isLoading ? (
+            loadingArea
+          ) : (
             <>
               <h2>通知設定</h2>
               <h3>通知したい曜日</h3>
@@ -235,7 +251,12 @@ const TopPage = () => {
                   </ButtonAsTypeButton>
                 </div>
                 <div>
-                  <div className={cn(styles.flexBox, styles.baseRainfallProbabilitesWrapper)}>
+                  <div
+                    className={cn(
+                      styles.flexBox,
+                      styles.baseRainfallProbabilitesWrapper,
+                    )}
+                  >
                     <h3>通知基準降水確率</h3>
                     <select name="baseRainfallProbabilites">
                       {rainfallProbabilities.map((value) => (
@@ -247,10 +268,7 @@ const TopPage = () => {
                   </div>
                   <p>降水確率が設定値以上の場合に通知します</p>
                 </div>
-                <button
-                  type="submit"
-                  className={styles.submitButton}
-                >
+                <button type="submit" className={styles.submitButton}>
                   設定を更新
                 </button>
               </form>
@@ -259,7 +277,7 @@ const TopPage = () => {
         </div>
       )}
       {isLoggedIn === false && (
-       <p>LIFFブラウザから開くか、ログインしてください</p> 
+        <p>LIFFブラウザから開くか、ログインしてください</p>
       )}
     </main>
   );

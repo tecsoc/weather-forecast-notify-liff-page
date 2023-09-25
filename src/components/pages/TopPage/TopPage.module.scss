@@ -14,7 +14,6 @@
   :global(p) {
     margin: 0.75rem 0;
   }
-
 }
 
 .flexBox {
@@ -80,7 +79,7 @@
     height: $iconwidth * 0.7;
     background-color: #535353;
     clip-path: polygon(0 0, 100% 0, 50% 100%);
-    content: '';
+    content: "";
     pointer-events: none;
   }
 
@@ -89,7 +88,8 @@
 
     flex: 1;
     appearance: none;
-    padding: .4rem calc($horizontalPadding + $iconwidth * 2) .4rem $horizontalPadding;
+    padding: 0.4rem calc($horizontalPadding + $iconwidth * 2) 0.4rem
+      $horizontalPadding;
     border: none;
     border-bottom: 2px solid #cccccc;
     background-color: #fff;
