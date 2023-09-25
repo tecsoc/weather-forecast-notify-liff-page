@@ -136,7 +136,8 @@ const TopPage = () => {
   const submitHandler = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      const baseRainfallProbabilities = formRef?.current?.baseRainfallProbabilities.value;
+      const baseRainfallProbabilities =
+        formRef?.current?.baseRainfallProbabilities.value;
       const notifyWeekdayArray = Array.from<HTMLInputElement>(
         formRef?.current?.getElementsByTagName("input") ?? [],
       ).map(({ checked }) => Number(checked));
@@ -186,7 +187,7 @@ const TopPage = () => {
         ).json();
         if (formRef?.current?.baseRainfallProbabilities) {
           formRef.current.baseRainfallProbabilities.value =
-          baseRainfallProbabilities;
+            baseRainfallProbabilities;
         }
         const payload = settings.map((value) => ({ value: Boolean(value) }));
         dispatchTargetWeekdays({
