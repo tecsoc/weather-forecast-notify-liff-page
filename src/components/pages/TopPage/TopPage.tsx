@@ -16,6 +16,12 @@ import WeekdayCheckBox from "./atoms/WeekdayCheckBox/WeekdayCheckBox";
 import { getFetchUrl } from "@/modules/ts/fetch";
 import LoadingArea from "./atoms/LoadingArea/LoadingArea";
 
+const rainfallProbabilities = Array.from({
+    length: 11,
+  },
+(_, i) => i * 10,
+);
+
 type WeekdayObjType = {
   id: string;
   text: string;
@@ -149,24 +155,24 @@ const TopPage = () => {
 
   useLayoutEffect(() => {
     (async () => {
-      await liff.init({
-        liffId: "2000603396-QBE1npvl",
-        withLoginOnExternalBrowser: true,
-      });
-      if (liff.isLoggedIn()) {
-        const {displayName: userName, userId} = await liff.getProfile();
-        setUserName(userName);
-        const url = getFetchUrl(settingApiEndpoint, {
-          userId
-        });
-        const { settings }: {settings: number[]} = await (await fetch(url)).json();
-        const payload = settings.map(value => ({value: Boolean(value)}));
-        dispatchTargetWeekdays({
-          type: "setCheckAll",
-          payload,
-        });
-        setIsLoading(false);
-      }
+    await liff.init({
+    liffId: "2000603396-QBE1npvl",
+    withLoginOnExternalBrowser: true,
+    });
+    if (liff.isLoggedIn()) {
+    const {displayName: userName, userId} = await liff.getProfile();
+    setUserName(userName);
+    const url = getFetchUrl(settingApiEndpoint, {
+    userId
+    });
+    const { settings }: {settings: number[]} = await (await fetch(url)).json();
+    const payload = settings.map(value => ({value: Boolean(value)}));
+    dispatchTargetWeekdays({
+    type: "setCheckAll",
+    payload,
+    });
+    setIsLoading(false);
+    }
     })();
   }, []);
 
@@ -217,6 +223,19 @@ const TopPage = () => {
                   >
                     平日のみ選択
                   </ButtonAsTypeButton>
+                </div>
+                <div>
+                  <div className={cn(styles.flexBox, styles.baseRainfallProbabilitesWrapper)}>
+                    <h3>通知基準降水確率</h3>
+                    <select>
+                      {rainfallProbabilities.map((value) => (
+                        <option key={value} value={value}>
+                          {value}%
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <p>降水確率が設定値以上の場合に通知します</p>
                 </div>
                 <button
                   type="submit"

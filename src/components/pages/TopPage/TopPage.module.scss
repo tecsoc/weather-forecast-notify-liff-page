@@ -8,7 +8,11 @@
     margin: 0.8rem 0;
   }
   :global(h3) {
-    margin: 0.2rem 0;
+    margin: 0.4rem 0;
+  }
+
+  :global(p) {
+    margin: 0.75rem 0;
   }
 
 }
@@ -27,8 +31,8 @@
 }
 
 .handleButtonWrapper {
-  gap: 10px 10px;
-  margin: 15px 0;
+  gap: 0.8rem;
+  margin: 0.8rem 0 1.6rem;
 }
 
 .selectionButton {
@@ -59,5 +63,42 @@
   @media (min-width: $pc-min-wdith) {
     margin: 0 20rem;
     width: calc(100% - 20rem * 2);
+  }
+}
+
+.baseRainfallProbabilitesWrapper {
+  $iconwidth: 0.75rem;
+
+  position: relative;
+  gap: 2rem;
+  justify-content: stretch;
+
+  &:after {
+    position: absolute;
+    right: 1rem;
+    width: $iconwidth;
+    height: $iconwidth * 0.7;
+    background-color: #535353;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    content: '';
+    pointer-events: none;
+  }
+
+  :global(select) {
+    $horizontalPadding: 1.2rem;
+
+    flex: 1;
+    appearance: none;
+    padding: .4rem calc($horizontalPadding + $iconwidth * 2) .4rem $horizontalPadding;
+    border: none;
+    border-bottom: 2px solid #cccccc;
+    background-color: #fff;
+    color: #333333;
+    font-size: 100%;
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+    }
   }
 }
