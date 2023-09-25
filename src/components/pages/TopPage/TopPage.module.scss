@@ -5,8 +5,7 @@
     margin-bottom: 0.8rem;
   }
   :global(h2) {
-    margin-bottom: 0;
-    margin-top: 0.8rem;
+    margin: 0.8rem 0;
   }
   :global(h3) {
     margin: 0.2rem 0;
@@ -33,10 +32,9 @@
 }
 
 .selectionButton {
-  padding: 9px 12px;
-  border-radius: 22px;
-  display: inline-block;
-  font-size: 100%;
+  padding: 8px 10px;
+  border-radius: 1.1rem;
+  font-size: 90%;
   outline: none;
   font-weight: bolder;
   color: #33c634;
@@ -46,13 +44,12 @@
 .submitButton {
   margin: 1.5rem auto;
   display: block;
-  padding: 15px 40px;
+  padding: 0.8rem 1.6rem;
   font-weight: bold;
-  font-size: 20px;
-  border-width: 5px;
+  font-size: 115%;
   background: #16c464;
   border: none;
-  border-radius: 22px;
+  border-radius: 1.2rem;
   color: white;
 }
 

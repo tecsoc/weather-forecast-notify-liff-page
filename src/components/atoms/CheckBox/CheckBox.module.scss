@@ -1,19 +1,19 @@
 @use "@/modules/styles/colors.scss" as colors;
 
 .checkboxLabel {
+  $boxSize: 18px;
+  $boxPadding: 8px;
+
   box-sizing: border-box;
   transition: background-color 0.2s linear;
   position: relative;
-  display: inline-block;
-  padding: 10px 10px 10px 20px;
-  border-radius: 12px;
+  text-align: right;
+  padding: $boxPadding $boxPadding $boxPadding calc($boxPadding * 2 + $boxSize + 8px);
+  border-radius: 10px;
   background-color: #f0f0f0;
-  vertical-align: middle;
   cursor: pointer;
-  text-indent: 28px;
-  font-size: 115%;
+  font-size: 110%;
   font-weight: bolder;
-  vertical-align: middle;
 
   &:hover {
     background-color: #e2edd7;
@@ -23,14 +23,14 @@
   }
 
   &:before {
+    $height: 5px;
     transition: opacity 0.2s linear;
     position: absolute;
-    top: 55%;
-    left: 23px;
+    top: calc($boxSize / 2 + 8px);
+    left: calc($boxPadding + $boxSize / 2);
     display: block;
-    margin-top: -8px;
-    width: 3px;
-    height: 7px;
+    width: 2.5px;
+    height: $height;
     border-right: 2px solid colors.$limeGreen;
     border-bottom: 2px solid colors.$limeGreen;
     content: "";
@@ -41,12 +41,11 @@
   &:after {
     transition: border-color 0.2s linear;
     position: absolute;
-    top: 45%;
-    left: 12px;
+    top: 10px;
+    left: 7px;
     display: block;
-    margin-top: -10px;
-    width: 20px;
-    height: 20px;
+    width: $boxSize;
+    height: $boxSize;
     border: 3px solid #bbb;
     border-radius: 8px;
     content: "";
