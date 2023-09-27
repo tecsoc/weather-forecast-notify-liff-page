@@ -7,6 +7,7 @@ import React, {
   useState,
   useLayoutEffect,
   useMemo,
+  use,
 } from "react";
 import ButtonAsTypeButton from "@/components/atoms/ButtonAsTypeButton/ButtonAsTypeButton";
 import cn from "@/modules/ts/cn";
@@ -14,12 +15,14 @@ import liff from "@line/liff";
 import {
   allCheckPayload,
   allNotCheckPayload,
-  defalutTargetWeekdays,
+  defaultBaseRainfallProbability,
+  defaultTargetWeekdays,
   settingApiEndpoint,
 } from "@/modules/ts/const";
 import WeekdayCheckBox from "./atoms/WeekdayCheckBox/WeekdayCheckBox";
 import { getFetchUrl } from "@/modules/ts/fetch";
 import LoadingArea from "./atoms/LoadingArea/LoadingArea";
+import { isDevelopEnvironment } from "@/modules/ts/util";
 
 const rainfallProbabilities = Array.from(
   {
@@ -89,17 +92,16 @@ const targetWeekdaysReducer = (
   return nextState;
 };
 
+const userNameInitialState = isDevelopEnvironment ? "develop" : "";
+
 const TopPage = () => {
-  const [userName, setUserName] = useState("ffff");
-  const isLoggedIn = useMemo(
-    () => (userName === "" ? null : Boolean(userName)),
-    [userName],
-  );
-  const [isLoading, setIsLoading] = useState(false);
+  const [userName, setUserName] = useState(userNameInitialState);
+  const isLoggedIn = useMemo(() => Boolean(userName), [userName]);
+  const isLoading = useMemo(() => !isLoggedIn, [isLoggedIn]);
 
   const [targetWeekdays, dispatchTargetWeekdays] = useReducer<
     React.Reducer<WeekdayObjType[], TargetWeekdayReducerActionType>
-  >(targetWeekdaysReducer, defalutTargetWeekdays);
+  >(targetWeekdaysReducer, defaultTargetWeekdays);
 
   const formRef = useRef<HTMLFormElement | null>(null);
   const setFormRef = useCallback((node: HTMLFormElement) => {
@@ -172,13 +174,13 @@ const TopPage = () => {
 
   useLayoutEffect(() => {
     (async () => {
+      if (isDevelopEnvironment) return;
       await liff.init({
         liffId: "2000603396-QBE1npvl",
         withLoginOnExternalBrowser: true,
       });
       if (liff.isLoggedIn()) {
         const { displayName: userName, userId } = await liff.getProfile();
-        setUserName(userName);
         const url = getFetchUrl(settingApiEndpoint, {
           userId,
         });
@@ -194,7 +196,7 @@ const TopPage = () => {
           type: "setCheckAll",
           payload,
         });
-        setIsLoading(false);
+        setUserName(userName);
       }
     })();
   }, []);
@@ -258,7 +260,7 @@ const TopPage = () => {
                     )}
                   >
                     <h3>通知基準降水確率</h3>
-                    <select name="baseRainfallProbability">
+                    <select name="baseRainfallProbability" defaultValue={defaultBaseRainfallProbability}>
                       {rainfallProbabilities.map((value) => (
                         <option key={value} value={value}>
                           {value}%
@@ -266,7 +268,7 @@ const TopPage = () => {
                       ))}
                     </select>
                   </div>
-                  <p>降水確率が設定値以上の場合に通知します</p>
+                  <p>※24時間の降水確率が設定値以上の場合に通知します</p>
                 </div>
                 <button type="submit" className={styles.submitButton}>
                   設定を更新

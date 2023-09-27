@@ -1,51 +1,51 @@
-const defaultValue = {
-  value: true,
-};
 
-export const defalutTargetWeekdays = [
+
+export const defaultTargetWeekdays = [
   {
     id: "Monday",
     text: "月",
-    ...defaultValue,
+    value: true,
   },
   {
     id: "Tuesday",
     text: "火",
-    ...defaultValue,
+    value: true,
   },
   {
     id: "Wednesday",
     text: "水",
-    ...defaultValue,
+    value: true,
   },
   {
     id: "Thursday",
     text: "木",
-    ...defaultValue,
+    value: true,
   },
   {
     id: "Friday",
     text: "金",
-    ...defaultValue,
+    value: true,
   },
   {
     id: "Saturday",
     text: "土",
-    ...defaultValue,
+    value: true,
   },
   {
     id: "Sunday",
     text: "日",
-    ...defaultValue,
+    value: true,
   },
   {
     id: "Holiday",
     text: "祝日",
-    ...defaultValue,
+    value: false,
   },
 ];
 
-const weekdayLength = defalutTargetWeekdays.length;
+export const defaultBaseRainfallProbability = 50;
+
+const weekdayLength = defaultTargetWeekdays.length;
 
 export const allCheckPayload = Array.from(
   {
