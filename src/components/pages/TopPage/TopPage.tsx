@@ -1,16 +1,6 @@
 "use client";
-import styles from "./TopPage.module.scss";
-import React, {
-  useReducer,
-  useCallback,
-  useRef,
-  useState,
-  useLayoutEffect,
-  useMemo,
-} from "react";
 import ButtonAsTypeButton from "@/components/atoms/ButtonAsTypeButton/ButtonAsTypeButton";
 import cn from "@/modules/ts/cn";
-import liff from "@line/liff";
 import {
   allCheckPayload,
   allNotCheckPayload,
@@ -18,10 +8,20 @@ import {
   defaultTargetWeekdays,
   settingApiEndpoint,
 } from "@/modules/ts/const";
-import WeekdayCheckBox from "./atoms/WeekdayCheckBox/WeekdayCheckBox";
-import { getFetchUrl } from "@/modules/ts/fetch";
-import LoadingArea from "./atoms/LoadingArea/LoadingArea";
+import { paramsToUrl } from "@/modules/ts/fetch";
 import { isDevelopEnvironment } from "@/modules/ts/util";
+import liff from "@line/liff";
+import React, {
+  useCallback,
+  useLayoutEffect,
+  useMemo,
+  useReducer,
+  useRef,
+  useState,
+} from "react";
+import styles from "./TopPage.module.scss";
+import LoadingArea from "./atoms/LoadingArea/LoadingArea";
+import WeekdayCheckBox from "./atoms/WeekdayCheckBox/WeekdayCheckBox";
 
 const rainfallProbabilities = Array.from(
   {
@@ -150,10 +150,10 @@ const TopPage = () => {
         baseRainfallProbability: baseRainfallProbability,
       };
       try {
-        const url = getFetchUrl(settingApiEndpoint, body);
+        const url = paramsToUrl(settingApiEndpoint, body);
         const response = await (await fetch(url)).json();
         if (response.result) {
-          let commonMessage = "設定を設定を更新しました。";
+          const commonMessage = "設定を設定を更新しました。";
           if (liff.isInClient()) {
             alert(`${commonMessage}\nウィンドウを閉じます`);
             liff.closeWindow();
@@ -180,7 +180,7 @@ const TopPage = () => {
       });
       if (liff.isLoggedIn()) {
         const { displayName: userName, userId } = await liff.getProfile();
-        const url = getFetchUrl(settingApiEndpoint, {
+        const url = paramsToUrl(settingApiEndpoint, {
           userId,
         });
         const { settings, baseRainfallProbability }: ApiResponse = await (

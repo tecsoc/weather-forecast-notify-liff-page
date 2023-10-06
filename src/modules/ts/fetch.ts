@@ -1,4 +1,4 @@
-export const getFetchUrl = (url: string, params: object) => {
+export const paramsToUrl = (url: string, params: object) => {
   const paramString = Object.entries(params)
     .flatMap(([key, value]) => {
       if (typeof value === "object" && Array.isArray(value)) {
