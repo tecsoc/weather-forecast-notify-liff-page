@@ -6,7 +6,7 @@ import {
   allNotCheckPayload,
   defaultBaseRainfallProbability,
   defaultTargetWeekdays,
-  settingApiEndpoint,
+  settingApiEndpoint
 } from "@/modules/ts/const";
 import { paramsToUrl } from "@/modules/ts/fetch";
 import { isDevelopEnvironment } from "@/modules/ts/util";
@@ -17,7 +17,7 @@ import React, {
   useMemo,
   useReducer,
   useRef,
-  useState,
+  useState
 } from "react";
 import styles from "./TopPage.module.scss";
 import LoadingArea from "./atoms/LoadingArea/LoadingArea";
@@ -29,6 +29,14 @@ const rainfallProbabilities = Array.from(
   },
   (_, i) => i * 10,
 );
+
+const selectValue = (value: number, select: HTMLSelectElement) => {
+  if(!select) return;
+  const options = Array.from(select.options);
+  const index = options.findIndex((option) => option.value === String(value));
+  if (index === -1) return;
+  options[index].selected = true;
+}
 
 type ApiResponse = {
   settings: number[];
@@ -173,7 +181,10 @@ const TopPage = () => {
 
   useLayoutEffect(() => {
     (async () => {
-      if (isDevelopEnvironment) return;
+      if (isDevelopEnvironment) {
+        selectValue(defaultBaseRainfallProbability, formRef?.current?.baseRainfallProbability)
+        return;
+      }
       await liff.init({
         liffId: "2000603396-QBE1npvl",
         withLoginOnExternalBrowser: true,
@@ -187,8 +198,7 @@ const TopPage = () => {
           await fetch(url)
         ).json();
         if (formRef?.current?.baseRainfallProbability) {
-          formRef.current.baseRainfallProbability.value =
-            baseRainfallProbability;
+          selectValue(baseRainfallProbability, formRef?.current?.baseRainfallProbability)
         }
         const payload = settings.map((value) => ({ value: Boolean(value) }));
         dispatchTargetWeekdays({
@@ -209,74 +219,76 @@ const TopPage = () => {
     <main className={styles.mainArea}>
       <h1>毎日5時に天気予報</h1>
       {!isLoggedIn && isLoading && loadingArea}
-      {isLoggedIn && (
-        <div>
-          <h3>{userName}さんようこそ</h3>
-          {isLoading ? (
-            loadingArea
-          ) : (
-            <>
-              <h2>通知設定</h2>
-              <h3>通知したい曜日</h3>
-              <form ref={setFormRef} onSubmit={submitHandler}>
-                <div className={cn(styles.flexBox, styles.checkboxWrapper)}>
-                  {targetWeekdays.map(({ id, text, value }) => (
-                    <WeekdayCheckBox
-                      key={id}
-                      checked={value}
-                      id={id}
-                      onChangeDispatch={dispatchTargetWeekdays}
-                    >
-                      {text}
-                    </WeekdayCheckBox>
-                  ))}
-                </div>
-                <div className={cn(styles.flexBox, styles.handleButtonWrapper)}>
-                  <ButtonAsTypeButton
-                    className={styles.selectionButton}
-                    onClick={allCheckHandler}
-                  >
-                    全て選択
-                  </ButtonAsTypeButton>
-                  <ButtonAsTypeButton
-                    className={styles.selectionButton}
-                    onClick={allNotCheckHandler}
-                  >
-                    全て選択解除
-                  </ButtonAsTypeButton>
-                  <ButtonAsTypeButton
-                    className={styles.selectionButton}
-                    onClick={weekdaysCheckHandler}
-                  >
-                    平日のみ選択
-                  </ButtonAsTypeButton>
-                </div>
-                <div>
-                  <div
-                    className={cn(
-                      styles.flexBox,
-                      styles.baseRainfallProbabilityWrapper,
-                    )}
-                  >
-                    <h3>通知基準降水確率</h3>
-                    <select name="baseRainfallProbability" defaultValue={defaultBaseRainfallProbability}>
-                      {rainfallProbabilities.map((value) => (
-                        <option key={value} value={value}>
-                          {value}%
-                        </option>
-                      ))}
-                    </select>
+        {isLoggedIn && (
+          <div>
+            <h3>{userName}さんようこそ</h3>
+            {isLoading ? (
+              loadingArea
+            ) : (
+              <>
+                <h2>通知設定</h2>
+                <h3>通知したい曜日</h3>
+                <form ref={setFormRef} onSubmit={submitHandler}>
+                  <div className={cn(styles.flexBox, styles.checkboxWrapper)}>
+                    {targetWeekdays.map(({ id, text, value }) => (
+                      <WeekdayCheckBox
+                        key={id}
+                        checked={value}
+                        id={id}
+                        onChangeDispatch={dispatchTargetWeekdays}
+                      >
+                        {text}
+                      </WeekdayCheckBox>
+                    ))}
                   </div>
-                  <p>※24時間の降水確率が設定値以上の場合に通知します</p>
-                </div>
-                <button type="submit" className={styles.submitButton}>
-                  設定を更新
-                </button>
-              </form>
-            </>
-          )}
-        </div>
-      )}
+                  <div className={cn(styles.flexBox, styles.handleButtonWrapper)}>
+                    <ButtonAsTypeButton
+                      className={styles.selectionButton}
+                      onClick={allCheckHandler}
+                    >
+                      全て選択
+                    </ButtonAsTypeButton>
+                    <ButtonAsTypeButton
+                      className={styles.selectionButton}
+                      onClick={allNotCheckHandler}
+                    >
+                      全て選択解除
+                    </ButtonAsTypeButton>
+                    <ButtonAsTypeButton
+                      className={styles.selectionButton}
+                      onClick={weekdaysCheckHandler}
+                    >
+                      平日のみ選択
+                    </ButtonAsTypeButton>
+                  </div>
+                  <div>
+                    <div
+                      className={cn(
+                        styles.flexBox,
+                        styles.baseRainfallProbabilityWrapper,
+                      )}
+                    >
+                      <h3>通知基準降水確率</h3>
+                      <select
+                        name="baseRainfallProbability"
+                      >
+                        {rainfallProbabilities.map((value) => (
+                          <option key={value} value={value}>
+                            {value}%
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <p>※24時間の降水確率が設定値以上の場合に通知します</p>
+                  </div>
+                  <button type="submit" className={styles.submitButton}>
+                    設定を更新
+                  </button>
+                </form>
+              </>
+            )}
+          </div>
+        )}
       {isLoggedIn === false && (
         <p>LIFFブラウザから開くか、ログインしてください</p>
       )}

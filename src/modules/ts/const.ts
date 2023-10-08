@@ -1,5 +1,3 @@
-
-
 export const defaultTargetWeekdays = [
   {
     id: "Monday",
@@ -43,7 +41,7 @@ export const defaultTargetWeekdays = [
   },
 ];
 
-export const defaultBaseRainfallProbability = 50;
+export const defaultBaseRainfallProbability = 30;
 
 const weekdayLength = defaultTargetWeekdays.length;
 
