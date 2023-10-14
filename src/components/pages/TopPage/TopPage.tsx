@@ -30,14 +30,6 @@ const rainfallProbabilities = Array.from(
   (_, i) => i * 10,
 );
 
-const selectValue = (value: number, select: HTMLSelectElement) => {
-  if(!select) return;
-  const options = Array.from(select.options);
-  const index = options.findIndex((option) => option.value === String(value));
-  if (index === -1) return;
-  options[index].selected = true;
-}
-
 type ApiResponse = {
   settings: number[];
   baseRainfallProbability: number;
@@ -103,6 +95,7 @@ const userNameInitialState = isDevelopEnvironment ? "develop" : "";
 
 const TopPage = () => {
   const [userName, setUserName] = useState(userNameInitialState);
+  const [baseRainfallProbability, setBaseRainfallProbability] = useState(defaultBaseRainfallProbability);
   const isLoggedIn = useMemo(() => Boolean(userName), [userName]);
   const isLoading = useMemo(() => !isLoggedIn, [isLoggedIn]);
 
@@ -182,7 +175,6 @@ const TopPage = () => {
   useLayoutEffect(() => {
     (async () => {
       if (isDevelopEnvironment) {
-        selectValue(defaultBaseRainfallProbability, formRef?.current?.baseRainfallProbability)
         return;
       }
       await liff.init({
@@ -197,9 +189,7 @@ const TopPage = () => {
         const { settings, baseRainfallProbability }: ApiResponse = await (
           await fetch(url)
         ).json();
-        if (formRef?.current?.baseRainfallProbability) {
-          selectValue(baseRainfallProbability, formRef?.current?.baseRainfallProbability)
-        }
+        setBaseRainfallProbability(baseRainfallProbability);
         const payload = settings.map((value) => ({ value: Boolean(value) }));
         dispatchTargetWeekdays({
           type: "setCheckAll",
@@ -271,6 +261,7 @@ const TopPage = () => {
                       <h3>通知基準降水確率</h3>
                       <select
                         name="baseRainfallProbability"
+                        defaultValue={baseRainfallProbability}
                       >
                         {rainfallProbabilities.map((value) => (
                           <option key={value} value={value}>
