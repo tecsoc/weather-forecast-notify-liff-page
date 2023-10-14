@@ -13,11 +13,13 @@ permissions:
   contents: read
   pages: write
   id-token: write
-env:
+env: 
   dev_branch: staging
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      dev_branch: staging
     steps:
       - uses: actions/checkout@v3
         with:
@@ -62,10 +64,10 @@ jobs:
         uses: actions/upload-pages-artifact@v1
         with:
           path: ./out
-        if: ${{ github.ref_name == 'main' || github.ref_name == env.dev_branch }}
+        if: ${{ github.event_name == 'push' }}
       
   deploy:
-    if: ${{ github.ref_name == 'main' || github.ref_name == env.dev_branch }}
+    if: ${{ github.event_name == 'push' }}
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
