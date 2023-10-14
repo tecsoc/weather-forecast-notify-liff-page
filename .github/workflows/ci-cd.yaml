@@ -55,7 +55,7 @@ jobs:
           clean: false
         if : ${{ github.ref_name == env.dev_branch }}
       - name: ${{ env.dev_branch }} Brnach Build
-        run: pnpm && pnpm build
+        run: pnpm install && pnpm build
         working-directory: ${{ env.dev_branch }}
         if : ${{ github.ref_name == env.dev_branch }}
       - name: Copy to Dist
