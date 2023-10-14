@@ -55,11 +55,11 @@ jobs:
           ref: ${{ env.dev_branch }}
           path: ${{ env.dev_branch }}
           clean: false
-      - name: ${{ env.dev_branch }} Brnach Build
+      - name: ${{ env.dev_branch }} Branch Build
         run: pnpm install && pnpm build
         working-directory: ${{ env.dev_branch }}
       - name: Copy to Dist
-        run: cp -r ${{ env.dev_branch }}/dist dist/${{ env.dev_branch }}
+        run: cp -r ${{ env.dev_branch }}/out out/${{ env.dev_branch }}
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
