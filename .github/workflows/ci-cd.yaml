@@ -13,8 +13,6 @@ permissions:
   contents: read
   pages: write
   id-token: write
-env: 
-  dev_branch: staging
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -49,8 +47,8 @@ jobs:
         run: pnpm lint
       - name: pnpm build
         run: pnpm build
-      - name: Checkout Staging Branch
-        uses: actions/checkout@v2
+      - name: Checkout ${{ env.dev_branch }} Branch
+        uses: actions/checkout@v3
         with:
           ref: ${{ env.dev_branch }}
           path: ${{ env.dev_branch }}
