@@ -13,11 +13,11 @@ permissions:
   contents: read
   pages: write
   id-token: write
+env:
+  dev_branch: staging
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      dev_branch: staging
     steps:
       - uses: actions/checkout@v3
         with:
@@ -53,14 +53,11 @@ jobs:
           ref: ${{ env.dev_branch }}
           path: ${{ env.dev_branch }}
           clean: false
-        if : ${{ github.ref_name == env.dev_branch }}
       - name: ${{ env.dev_branch }} Brnach Build
         run: pnpm install && pnpm build
         working-directory: ${{ env.dev_branch }}
-        if : ${{ github.ref_name == env.dev_branch }}
       - name: Copy to Dist
         run: cp -r ${{ env.dev_branch }}/dist dist/${{ env.dev_branch }}
-        if : ${{ github.ref_name == env.dev_branch }}
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
@@ -68,7 +65,7 @@ jobs:
         if: ${{ github.ref_name == 'main' || github.ref_name == env.dev_branch }}
       
   deploy:
-    if: ${{ github.ref_name == 'main' }}
+    if: ${{ github.ref_name == 'main' || github.ref_name == env.dev_branch }}
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
