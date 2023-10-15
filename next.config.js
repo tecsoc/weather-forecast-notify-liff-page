@@ -1,16 +1,17 @@
 const path = require("path");
+const { execSync } = require('child_process');
 
 const isProduction = process.env.NODE_ENV === "production";
 const repository = process.env.GITHUB_REPOSITORY;
 const repositoryOwner = process.env.GITHUB_REPOSITORY_OWNER;
 const repositoryName = repository?.replace(repositoryOwner, "");
-const branch = process.env.GITHUB_HEAD_REF;
+const currentBranch = execSync('git rev-parse --abbrev-ref HEAD').toString().trim();
 const getAssetPrefix = () => {
   if (isProduction) {
     if (repositoryName === "main") {
       return repositoryName;
     } else {
-      return `${repositoryName}/${branch}`;
+      return `${repositoryName}/${currentBranch}`;
     }
   }
   return "";
