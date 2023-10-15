@@ -53,8 +53,6 @@ jobs:
           ref: ${{ env.dev_branch }}
           path: ${{ env.dev_branch }}
           clean: false
-      - name: Delete ${{ env.dev_branch }} Branch .git
-        run: rm -rf ${{ env.dev_branch }}/.git
       - name: ${{ env.dev_branch }} Branch Build
         run: pnpm install && pnpm build
         working-directory: ${{ env.dev_branch }}
