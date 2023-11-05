@@ -207,7 +207,7 @@ const TopPage = () => {
 
   return (
     <main className={styles.mainArea}>
-      <h1>毎日気象庁天気</h1>
+      <h1>毎日5時に天気予報</h1>
       {!isLoggedIn && isLoading && loadingArea}
         {isLoggedIn && (
           <div>
