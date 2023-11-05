@@ -2,14 +2,14 @@
 
 .checkboxLabel {
   $boxSize: 18px;
-  $boxPadding: 8px;
+  $boxPadding: 6px;
 
   box-sizing: border-box;
   transition: background-color 0.2s linear;
   position: relative;
   text-align: right;
   padding: $boxPadding $boxPadding $boxPadding
-    calc($boxPadding * 2 + $boxSize + 8px);
+    calc($boxPadding * 2 + $boxSize + 16px);
   border-radius: 10px;
   background-color: #f0f0f0;
   cursor: pointer;
@@ -27,8 +27,8 @@
     $height: 5px;
     transition: opacity 0.2s linear;
     position: absolute;
-    top: calc($boxSize / 2 + 8px);
-    left: calc($boxPadding + $boxSize / 2);
+    top: calc($boxSize / 2 + 6px);
+    left: calc($boxSize - 2px);
     display: block;
     width: 2.5px;
     height: $height;
@@ -42,7 +42,7 @@
   &:after {
     transition: border-color 0.2s linear;
     position: absolute;
-    top: 10px;
+    top: 8px;
     left: 7px;
     display: block;
     width: $boxSize;
