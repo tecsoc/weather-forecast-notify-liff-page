@@ -35,5 +35,8 @@
     "firefox 67",
     "opera 51",
     "safari 12"
-  ]
+  ],
+  "volta": {
+    "node": "18.18.2"
+  }
 }
