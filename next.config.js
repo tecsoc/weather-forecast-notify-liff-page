@@ -5,13 +5,14 @@ const isProduction = process.env.NODE_ENV === "production";
 const repository = process.env.GITHUB_REPOSITORY;
 const repositoryOwner = process.env.GITHUB_REPOSITORY_OWNER;
 const repositoryName = repository?.replace(repositoryOwner, "");
+const baseUrl =  `/${repositoryName}`;
 const currentBranch = execSync('git rev-parse --abbrev-ref HEAD').toString().trim();
 const getAssetPrefix = () => {
   if (isProduction) {
     if (repositoryName === "main") {
-      return repositoryName;
+      return baseUrl;
     } else {
-      return `${repositoryName}/${currentBranch}`;
+      return `${baseUrl}/${currentBranch}`;
     }
   }
   return "";
