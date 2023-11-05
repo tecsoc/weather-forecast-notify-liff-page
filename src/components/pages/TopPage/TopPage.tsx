@@ -207,7 +207,7 @@ const TopPage = () => {
 
   return (
     <main className={styles.mainArea}>
-      <h1>毎日5時に天気予報</h1>
+      <h1>毎日気象庁天気</h1>
       {!isLoggedIn && isLoading && loadingArea}
         {isLoggedIn && (
           <div>
@@ -270,7 +270,7 @@ const TopPage = () => {
                         ))}
                       </select>
                     </div>
-                    <p>※24時間の降水確率がひとつでも設定値以上の場合に通知します</p>
+                    <p>※1日の降水確率が1つでも設定値以上の場合に通知します。</p>
                   </div>
                   <button type="submit" className={styles.submitButton}>
                     設定を更新
