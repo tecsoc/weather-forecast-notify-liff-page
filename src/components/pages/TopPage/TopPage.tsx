@@ -270,7 +270,7 @@ const TopPage = () => {
                         ))}
                       </select>
                     </div>
-                    <p>※24時間の降水確率がひとつでも設定値以上の場合に通知します</p>
+                    <p>※24時間の降水確率が設定値以上の場合に通知します</p>
                   </div>
                   <button type="submit" className={styles.submitButton}>
                     設定を更新
