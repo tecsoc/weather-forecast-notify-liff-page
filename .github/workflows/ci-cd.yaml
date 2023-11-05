@@ -27,6 +27,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version-file: package.json
+          cache: yarn
+          cache-dependency-path: yarn.lock
       - name: Get node_modules path
         uses: actions/cache@v3
         with:
