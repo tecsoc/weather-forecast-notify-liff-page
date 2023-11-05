@@ -35,12 +35,13 @@
 .handleButtonWrapper {
   gap: 0.8rem;
   margin: 0.8rem 0 1.2rem;
+  flex-wrap: nowrap;
 }
 
 .selectionButton {
   padding: 8px 10px;
   border-radius: 1.1rem;
-  font-size: 90%;
+  font-size: 0.8em;
   outline: none;
   font-weight: bolder;
   color: #33c634;
