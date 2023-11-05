@@ -2,15 +2,15 @@
 
 .mainArea {
   :global(h1) {
-    font-size: 175%;
+    font-size: 160%;
     margin-bottom: 0.5rem;
   }
   :global(h2) {
-    font-size: 140%;
+    font-size: 120%;
     margin: 0.6rem 0;
   }
   :global(h3) {
-    font-size: 115%;
+    font-size: 110%;
     margin: 0.4rem 0;
   }
 
@@ -28,8 +28,8 @@
 
 .checkboxWrapper {
   gap: 10px;
-  margin-bottom: 1.5px;
   margin-top: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .handleButtonWrapper {
@@ -48,7 +48,7 @@
 }
 
 .submitButton {
-  margin: 1.5rem auto;
+  margin: 0.8rem auto;
   display: block;
   padding: 0.8rem 1.6rem;
   font-weight: bold;
@@ -91,7 +91,7 @@
   }
 
   :global(select) {
-    $horizontalPadding: 1.2rem;
+    $horizontalPadding: 0.8rem;
 
     flex: 1;
     appearance: none;
