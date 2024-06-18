@@ -61,11 +61,19 @@
 }
 
 .loadingArea {
-  margin: 2rem 4rem;
+  margin: 1rem 4rem;
   width: calc(100% - 4rem * 2);
   @media (min-width: $pc-min-wdith) {
     margin: 0 20rem;
     width: calc(100% - 20rem * 2);
+  }
+
+  > div {
+    margin: 0.5rem 0
+  }
+
+  div {
+    margin: 3rem 0
   }
 }
 
