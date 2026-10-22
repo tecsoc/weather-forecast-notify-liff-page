@@ -9,36 +9,29 @@ on:
     branches:
       - main
       - staging
+  workflow_dispatch:
 permissions:
   contents: read
-  pages: write
-  id-token: write
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      dev_branch: staging
     steps:
-      - uses: actions/checkout@v3
-        with:
-          ref: main
-          clean: false
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Setup node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version-file: .nvmrc
-      - uses: pnpm/action-setup@v2
-        with:
-          version: latest
+          package-manager-cache: false
+      - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
       - name: Get pnpm store directory
         shell: bash
         run: |
           echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-      - uses: actions/cache@v3
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         name: Setup pnpm cache
         with:
           path: ${{ env.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('.nvmrc', 'package.json', 'pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
       - name: pnpm install
@@ -47,28 +40,17 @@ jobs:
         run: pnpm lint
       - name: pnpm build
         run: pnpm build
-      - name: Checkout Staging Branch
-        uses: actions/checkout@v2
-        with:
-          ref: ${{ env.dev_branch }}
-          path: ${{ env.dev_branch }}
-          clean: false
-        if : ${{ github.ref_name == env.dev_branch }}
-      - name: ${{ env.dev_branch }} Brnach Build
-        run: pnpm && pnpm build
-        working-directory: ${{ env.dev_branch }}
-        if : ${{ github.ref_name == env.dev_branch }}
-      - name: Copy to Dist
-        run: cp -r ${{ env.dev_branch }}/dist dist/${{ env.dev_branch }}
-        if : ${{ github.ref_name == env.dev_branch }}
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: ./out
-        if: ${{ github.ref_name == 'main' || github.ref_name == env.dev_branch }}
-      
+        if: ${{ github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch') }}
+
   deploy:
-    if: ${{ github.ref_name == 'main' }}
+    if: ${{ github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch') }}
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -77,4 +59,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
